@@ -1,0 +1,136 @@
+
+---- Engine ----
+Version: 2.15.1.0 ver-2.15.1.0-8f0649f Mar 10 2022
+Binary: Windows 64-bit Visual C++ 1900 Release
+Engine features: Direct3D11 OpenAL XPad360 Joystick SplashScreen FloatCoords HalfTexCoords Release
+
+---- Configs ----
+Loading boot config "C:/Users/llytaii/game_engineering/bachelor_thesis/build/data/configs/default.boot"...
+Loading user config "C:/Users/llytaii/game_engineering/bachelor_thesis/build/data/configs/default.user"...
+Using config file "configs/default.config"
+Using boot config file "configs/default.boot"
+Using user config file "configs/default.user"
+Using controls config file "configs/default.controls"
+
+---- GPU Detection ----
+GPU 0 Active: NVIDIA GeForce RTX 3080 10078 MB
+GPU 1		: Microsoft Basic Render Driver 16346 MB
+
+---- System ----
+OS:		Windows 10 (build 22000) 64-bit
+
+CPU:	AMD Ryzen 9 5900X 12-Core Processor            
+		Frequency: 3700MHz
+		Extensions:  MMX+ SSE SSE2 SSE3 SSSE3 SSE41 SSE42 SSE4A AVX AVX2 HTT
+		Cores:12 Threads:24
+
+		System memory: 32693 MB
+		Sync threads:  23
+		Async threads: 12
+
+GPU:	NVIDIA GeForce RTX 3080
+		Video memory:  10078 MB
+
+
+---- Plugins ----
+Plugins initialization: 0ms
+
+
+---- Application ----
+Loading "dxgi.dll"...
+Loading "openal32.dll"...
+Set 860x560 fullwindow video mode
+Application initialization: 147ms
+
+
+
+---- Render ----
+Renderer: NVidia 10078MB
+Renderer API: Direct3D 11.0
+Maximum texture size:    16384
+Maximum texture units:   16
+
+---- Filesystem ----
+App path:  C:/Users/llytaii/game_engineering/bachelor_thesis/build/bin/
+Data path: C:/Users/llytaii/game_engineering/bachelor_thesis/build/data/
+Save path: C:/Users/llytaii/game_engineering/bachelor_thesis/build/bin/
+
+Runtimes loaded: 43 62ms
+Filesystem initialization: 527ms
+
+---- Sound ----
+Renderer: OpenAL Soft on Realtek HD Audio 2nd output (Realtek(R) Audio)
+OpenAL vendor:   OpenAL Community
+OpenAL renderer: OpenAL Soft
+OpenAL version:  1.1 ALSOFT 1.19.1
+Found AL_EXT_LINEAR_DISTANCE
+Found AL_EXT_OFFSET
+Found ALC_EXT_EFX
+Found ALC_SOFT_HRTF
+Found EFX Filter
+Found EFX Reverb
+Found EAX Reverb
+Found QUAD16 format
+Found 51CHN16 format
+Found 61CHN16 format
+Found 71CHN16 format
+Device enumeration supported
+Maximum sources:         256
+Maximum effect slots:    16
+Maximum auxiliary sends: 2
+Output sampling frequency: 48000hz
+HRTF not enabled!
+
+---- Physics ----
+
+---- PathFind ----
+
+Loading controls "C:/Users/llytaii/game_engineering/bachelor_thesis/build/data/configs/default.controls"...
+Loading "xinput1_4.dll"...
+Loading config "C:/Users/llytaii/game_engineering/bachelor_thesis/build/data/configs/default.config"...
+
+---- Materials ----
+Engine base materials loaded: 151 / 151 (133ms)
+Engine materials loaded:      59 / 59 (7ms)
+User base materials loaded:   13 / 13 (242ms)
+Total materials: 223
+
+
+---- Properties ----
+Properties loaded:            4 / 4 (1ms)
+
+Shaders loaded: 2071 (1s)
+Set 960x540 windowed video mode
+Engine initialization: 8984ms
+
+
+---- Interpreter ----
+Version: 2.90
+
+Unigine~# world_load scene
+ERROR:	Interpreter::restore_state(): different number of libraries
+Script loading "core/unigine.usc" 13ms
+Loading "core/locale/unigine.locale" dictionary 0ms
+WARNING:	ComponentVariable::save: wrong args string my_type=2;max=24,min=0
+WARNING:	ComponentVariable::save: wrong args string my_type=2;max=24,min=0
+WARNING:	ComponentVariable::save: wrong args string my_type=2;max=24,min=0
+WARNING:	ComponentVariable::save: wrong args string my_type=2;max=24,min=0
+World loading "scene.world" 128ms
+
+---- Load cache textures ----
+Cache textures loaded 733 (784ms)
+
+Close "openal32.dll"
+ERROR:	D3D11RenderContext::destroyContext(): 6 unreleased references
+Total RAM:           13.6 MB
+- system RAM used:   4.6 MB
+- pool RAM reserved: 9.0 MB
+- pool RAM used:     4.0 MB
+Total allocs:        178350
+- system allocs:     7068
+- 16b pool allocs:   138987
+- 32b pool allocs:   3988
+- 64b pool allocs:   28307
+
+
+Shutdown

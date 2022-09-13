@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Natvis Include="../utils/natvis/unigine_stl.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\action.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\attributes.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\broadcaster.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\goal.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\instruction.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\reasoner.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\logger.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="AppEditorLogic.cpp">
+      <Filter>Unigine</Filter>
+    </ClCompile>
+    <ClCompile Include="AppSystemLogic.cpp">
+      <Filter>Unigine</Filter>
+    </ClCompile>
+    <ClCompile Include="AppWorldLogic.cpp">
+      <Filter>Unigine</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Unigine</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>interface\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gob_engine30\gob_engine30\growth.cpp">
+      <Filter>gob_engine30</Filter>
+    </ClCompile>
+    <ClCompile Include="actions_broadcaster.cpp">
+      <Filter>interface\components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\action.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\attributes.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\broadcaster.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\goal.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\instruction.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\reasoner.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\logger.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="AppEditorLogic.h">
+      <Filter>Unigine</Filter>
+    </ClInclude>
+    <ClInclude Include="AppSystemLogic.h">
+      <Filter>Unigine</Filter>
+    </ClInclude>
+    <ClInclude Include="AppWorldLogic.h">
+      <Filter>Unigine</Filter>
+    </ClInclude>
+    <ClInclude Include="DoInstruction.h">
+      <Filter>interface\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveInstruction.h">
+      <Filter>interface\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="UnigineInstruction.h">
+      <Filter>interface\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>interface\components</Filter>
+    </ClInclude>
+    <ClInclude Include="TalkInstruction.h">
+      <Filter>interface\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\growth.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gob_engine30\gob_engine30\common.h">
+      <Filter>gob_engine30</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostInstruction.h">
+      <Filter>interface\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="actions_broadcaster.h">
+      <Filter>interface\components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="gob_engine30">
+      <UniqueIdentifier>{c09a770d-ef3f-48d8-95d5-f231af6b0a5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{20c8b6af-056e-4f09-b65d-af0706801d5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unigine">
+      <UniqueIdentifier>{09d7ec96-f193-4381-968c-b9969877caaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface\instructions">
+      <UniqueIdentifier>{508661cf-e814-4b8c-863d-056a2aa172e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface\components">
+      <UniqueIdentifier>{3cdd3144-d0fa-4d8c-8a6c-251b481feb9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

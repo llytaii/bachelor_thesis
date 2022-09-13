@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<property version="2.15.1.0" name="ActionBroadcaster" manual="1" parent_name="node_base">
+	<struct name="GoalChange">
+		<parameter name="goal_name" type="string">Goal Name</parameter>
+		<parameter name="change" type="float" title="Change" tooltip="Change for Goal" my_type="2" max="1" min="-1">0</parameter>
+		<parameter name="duration" type="float" title="Duration" tooltip="Duration over which the Goal should be changed">0</parameter>
+	</struct>
+	<struct name="PropMoveInstruction">
+		<parameter name="destination" type="node" title="Destination">0</parameter>
+		<parameter name="arrive_radius" type="float" title="Arrive Radius">0.1</parameter>
+		<parameter name="interruptable" type="int" title="Interruptable" tooltip="0 = not interruptable" my_type="2" max="1" " min"="0">1</parameter>
+		<parameter name="sequence_position" type="int" title="Order Position" my_type="2" max="255" min="0">0</parameter>
+		<parameter name="text" type="string"/>
+		<parameter name="speed" type="float">0</parameter>
+	</struct>
+	<struct name="PropGhostInstruction">
+		<parameter name="destination" type="node" title="Destination">0</parameter>
+		<parameter name="scared_person" type="array" title="ScaredPersons" array_type="node"/>
+		<parameter name="arrive_radius" type="float" title="Arrive Radius">0.1</parameter>
+		<parameter name="interruptable" type="int" title="Interruptable" tooltip="0 = not interruptable" my_type="2" max="1" " min"="0">1</parameter>
+		<parameter name="sequence_position" type="int" title="Order Position" my_type="2" max="255" min="0">0</parameter>
+		<parameter name="text" type="string"/>
+		<parameter name="speed" type="float">0</parameter>
+	</struct>
+	<struct name="PropDoInstruction">
+		<parameter name="destination" type="node" title="Destination">0</parameter>
+		<parameter name="sequence_position" type="int" title="Order Position" my_type="2" max="255" min="0">0</parameter>
+		<parameter name="duration" type="float" title="Duration in Minutes" tooltip="Action Duration" my_type="2" max="24" min="0">10</parameter>
+		<parameter name="interrupt_progress" type="float" title="Interrupt Progress in % left
+e.g. 0.7 = 70% of instruction has to be done" my_type="2" max="1" min="0">1</parameter>
+		<parameter name="task" type="string">Task</parameter>
+		<parameter name="text" type="string"/>
+		<parameter name="speed" type="float">4</parameter>
+	</struct>
+	<struct name="PropTalkInstruction">
+		<parameter name="complice" type="node" title="Complice">0</parameter>
+		<parameter name="duration" type="float" title="Duration in Minutes" tooltip="Action Duration" my_type="2" max="24" min="0">10</parameter>
+		<parameter name="interrupt_progress" type="float" title="Interrupt Progress in % left
+e.g. 0.7 = 70% of instruction has to be done" my_type="2" max="1" min="0">0.3</parameter>
+	</struct>
+	<struct name="Action">
+		<parameter name="name" type="string">Name</parameter>
+		<parameter name="display_text" type="int" title="Display Text" tooltip="0 = no text" my_type="2" max="1" " min"="0">1</parameter>
+		<parameter name="affected_goals" type="array" title="Affected Goals" array_type="GoalChange"/>
+		<parameter name="move_instructions" type="array" title="Move Instructions" array_type="PropMoveInstruction"/>
+		<parameter name="ghost_instructions" type="array" title="Ghost Instructions" array_type="PropGhostInstruction"/>
+		<parameter name="do_instructions" type="array" title="Do Instructions" array_type="PropDoInstruction"/>
+		<parameter name="talk_instructions" type="array" title="Talk Instructions" array_type="PropTalkInstruction"/>
+		<parameter name="attributes" type="array" title="Attributes" array_type="string"/>
+	</struct>
+	<parameter name="m_default_attributes" type="array" title="Default Attributes" array_type="string"/>
+	<parameter name="prop_actions" type="array" array_type="Action"/>
+</property>

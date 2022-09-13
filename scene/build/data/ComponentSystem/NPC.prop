@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<property version="2.15.1.0" name="NPC" manual="1" parent_name="node_base">
+	<struct name="PermanentGrowth">
+		<parameter name="start" type="float" title="Start in Minutes" tooltip="0: 6 am, 12: 18 pm" my_type="2">0</parameter>
+		<parameter name="end" type="float" title="End in Minutes" tooltip="0: 6 am, 12: 18 pm" my_type="2">24</parameter>
+		<parameter name="change" type="float" title="Change" tooltip="Change during one Interval">0</parameter>
+	</struct>
+	<struct name="TemporaryGrowth">
+		<parameter name="change" type="float" title="Change">0</parameter>
+		<parameter name="duration" type="float" title="Duration in seconds">0</parameter>
+	</struct>
+	<struct name="RandomGrowth">
+		<parameter name="start" type="float" title="Start in Minutes" tooltip="0: 6 am, 12: 18 pm" my_type="2">0</parameter>
+		<parameter name="end" type="float" title="End in Minutes" tooltip="0: 6 am, 12: 18 pm" my_type="2">24</parameter>
+		<parameter name="change_start" type="float" title="Random Interval Start">0</parameter>
+		<parameter name="change_end" type="float" title="Random Interval End">1</parameter>
+	</struct>
+	<struct name="Goal">
+		<parameter name="name" type="string">NULL</parameter>
+		<parameter name="threshold" type="float">0</parameter>
+		<parameter name="value" type="float">0</parameter>
+		<parameter name="rank" type="int" title="Rank" my_type="2" max="255" min="1">1</parameter>
+		<parameter name="m_permanent_growths" type="array" title="Permanent Growths" array_type="PermanentGrowth"/>
+		<parameter name="m_temporary_growths" type="array" title="Temporary Growths" array_type="TemporaryGrowth"/>
+		<parameter name="m_random_growths" type="array" title="Random Growths" array_type="RandomGrowth"/>
+	</struct>
+	<parameter name="m_attributes" type="array" title="Attributes" array_type="string"/>
+	<parameter name="m_decision_strat" type="int" title="Action Choose Strategy" tooltip="0: MP
+1: BD
+2: BDT
+3: HMP
+4: HBD
+5: HBDT
+6: hmptv
+7: hbdte" my_type="2" max="7" min="0">0</parameter>
+	<parameter name="m_evaluate_strat" type="int" title="Evaluate Strategy" tooltip="0: MINIMAL_SCORE
+1: MINIMAL_SCORE_TIME
+" my_typee="2" max="1" min="0">0</parameter>
+	<parameter name="m_redeem_strat" type="int" title="Redeem Strategy" tooltip="0: DELAYED
+1: INSTANT
+" my_typeee="2" max="1" min="0">0</parameter>
+	<parameter name="m_day_duration" type="float" title="Day Duration in Minutes">24</parameter>
+	<parameter name="m_current_time" type="float" title="Current Time in Minutes">0</parameter>
+	<parameter name="m_goals" type="array" title="Goals" array_type="Goal"/>
+</property>

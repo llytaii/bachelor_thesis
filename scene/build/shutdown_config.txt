@@ -1,0 +1,6 @@
+2 24 60
+# 1 24 60
+# => 1 * 24 * 60 + 1 <- shutdown timer in seconds
+# day_duration: 24 * 60s, amount_of_days: 1
+# auto exit application after 1 day and 1 second, where 1 day := 24 * 60 seconds
+# rename file for no auto shutdown

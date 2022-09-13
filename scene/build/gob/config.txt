@@ -1,0 +1,9 @@
+mp bd bdt hmp hbd hbdt hmpbdt
+# mp bd bdt hmp hbd hbdt hmpbdt
+# first line enables visualisation for npc with given strategy
+# mp: most pressing
+# bd: best dissatisfaction
+# bdt: best dissatisfaction time
+# hmp: hierarchical most pressing
+# hbd: hierarchical best dissatisfaction
+# hbdt: hierarchical best dissatisfaction time
