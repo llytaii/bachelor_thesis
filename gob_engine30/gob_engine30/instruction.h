@@ -12,8 +12,6 @@ namespace GOB
 	{
 		CONTINUE,
 		DONE,
-
-		// these are not used so far
 		INTERRUPT,
 		ABORT,
 		ABORT_AND_COOLDOWN,

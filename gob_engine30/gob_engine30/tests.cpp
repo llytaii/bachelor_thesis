@@ -51,15 +51,15 @@ private:
 
 TEST_CASE("INSTRUCTION")
 {
-	auto position = uint8_t(3);
-	auto duration = float(5.5f);
+	uint8_t position = 3;
+	float duration = 5.5f;
 
-	auto i = new int;
+	int* i = new int;
 	delete i;
 	REQUIRE(i != nullptr);
 
-	auto v = static_cast<void*>(i);
-	auto r = static_cast<Reasoner*>(v);
+	void* v = static_cast<void*>(i);
+	Reasoner* r = static_cast<Reasoner*>(v);
 
 	auto greetings = GreetingsInstruction{ position, duration };
 	greetings.set_npc_reasoner(v, r);
@@ -150,7 +150,7 @@ TEST_CASE("ACTION")
 
 	SECTION("copy constructor")
 	{
-		auto ptr = new int;
+		int* ptr = new int;
 		delete ptr;
 		Reasoner* r_ptr = static_cast<Reasoner*>(static_cast<void*>(ptr));
 		Action original;
@@ -180,7 +180,7 @@ TEST_CASE("ACTION")
 
 	SECTION("move constructor")
 	{
-		auto ptr = new int;
+		int* ptr = new int;
 		delete ptr;
 		Reasoner* r_ptr = static_cast<Reasoner*>(static_cast<void*>(ptr));
 		Action original;
@@ -198,8 +198,8 @@ TEST_CASE("ACTION")
 		REQUIRE(original.get_reasoner() == r_ptr);
 		REQUIRE(float_cmp(original.get_change("eat"), 0.4f));
 
-		auto cooldown = original.get_cooldown();
-		auto full_cooldown = original.get_full_cooldown();
+		float cooldown = original.get_cooldown();
+		float full_cooldown = original.get_full_cooldown();
 		auto name = original.get_name();
 		auto npc = original.get_npc();
 		auto reasoner = original.get_reasoner();
@@ -271,8 +271,8 @@ TEST_CASE("GROWTH")
 {
 	SECTION("TEMPORARY_GROWTH")
 	{
-		auto CHANGE = float(10.0f);
-		auto duration = float(10.0f);
+		float CHANGE = 10.0f;
+		float duration = 10.0f;
 		auto tmp_growth = TemporaryGrowth{ CHANGE, duration };
 
 		REQUIRE(tmp_growth.get_change(duration / 2) == CHANGE / 2);
@@ -498,7 +498,7 @@ TEST_CASE("REASONER")
 
 	Reasoner r1, r2;
 
-	auto i = new int;
+	int* i = new int;
 	delete i;
 
 	r1.set_day_duration(10.0f);
@@ -687,7 +687,7 @@ TEST_CASE("REASONER")
 		Reasoner evaluater;
 		evaluater.set_decision_strategy(DECISION::BEST_DISSATISFACTION);
 
-		// übergrundbedürfnisse
+		// ï¿½bergrundbedï¿½rfnisse
 		auto survive_g = evaluater.add_goal({ "survive" });
 		auto breathe_g = evaluater.add_goal({ "breathe" });
 
@@ -703,7 +703,7 @@ TEST_CASE("REASONER")
 		survive_a->set_goal_change(survive_g->get_name(), -1.0f);
 		breathe_a->set_goal_change(breathe_g->get_name(), -1.0f);
 
-		// grundbedürfnisse
+		// grundbedï¿½rfnisse
 		auto eat_g = evaluater.add_goal({ "eat" });
 		auto sleep_g = evaluater.add_goal({ "sleep" });
 		auto drink_g = evaluater.add_goal({ "drink" });
