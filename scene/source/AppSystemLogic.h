@@ -11,7 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #ifndef __APP_SYSTEM_LOGIC_H__
 #define __APP_SYSTEM_LOGIC_H__
 

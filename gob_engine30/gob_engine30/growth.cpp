@@ -5,7 +5,7 @@
 namespace GOB
 {
 	PermanentGrowth::PermanentGrowth(float change, float start, float end)
-		: m_change_per_second{ change / (end - start) }, m_start{ start }, m_end{ end }
+		: m_change_per_second{change / (end - start)}, m_start{start}, m_end{end}
 	{
 	}
 	float PermanentGrowth::get_change(float delta, float current_time) const
@@ -26,7 +26,7 @@ namespace GOB
 	}
 
 	TemporaryGrowth::TemporaryGrowth(float change, float duration)
-		: m_change_per_second{ change / duration }, duration{ duration }
+		: m_change_per_second{change / duration}, duration{duration}
 	{
 	}
 	void TemporaryGrowth::decrease_duration(float delta)
@@ -43,13 +43,11 @@ namespace GOB
 		return (duration < 0.0f);
 	}
 
-
-
 	RandomGrowth::RandomGrowth(
 		float change_start, float change_end,
 		float start, float end)
-		: m_change_start{ change_start },
-		m_change_end{ change_end }
+		: m_change_start{change_start},
+		  m_change_end{change_end}
 	{
 		m_start = start;
 		m_end = end;
@@ -64,8 +62,8 @@ namespace GOB
 	float RandomGrowth::get_random(float start, float end)
 	{
 		std::random_device rd;
-		std::mt19937_64 mt{ rd() };
-		std::uniform_real_distribution<float> dist{ start, end };
+		std::mt19937_64 mt{rd()};
+		std::uniform_real_distribution<float> dist{start, end};
 		return dist(mt);
 	}
 }

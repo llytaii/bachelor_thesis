@@ -18,35 +18,42 @@ class GreetingsInstruction
 public:
 	GreetingsInstruction() = default;
 	GreetingsInstruction(uint8_t _position, float duration)
-		: Instruction{ _position }
+		: Instruction{_position}
 	{
 		m_duration = duration;
 	}
 	virtual ~GreetingsInstruction() = default;
-	GreetingsInstruction& operator=(const GreetingsInstruction& other) = default;
+	GreetingsInstruction &operator=(const GreetingsInstruction &other) = default;
 
-	virtual float get_duration() const override {
+	virtual float get_duration() const override
+	{
 		return m_duration;
 	}
-	virtual void init() override {};
-	virtual GOB::ExecuteSignal execute() override {
+	virtual void init() override{};
+	virtual GOB::ExecuteSignal execute() override
+	{
 		return ExecuteSignal::DONE;
 	}
-	virtual void done() override {};
-	virtual bool is_ignorable() const override {
+	virtual void done() override{};
+	virtual bool is_ignorable() const override
+	{
 		return true;
 	}
-	virtual INSTRUCTION clone() const override {
+	virtual INSTRUCTION clone() const override
+	{
 		return std::make_unique<GreetingsInstruction>(*this);
 	}
-	void* get_npc() const {
+	void *get_npc() const
+	{
 		return m_npc;
 	}
-	Reasoner* get_reasoner() const {
+	Reasoner *get_reasoner() const
+	{
 		return m_reasoner;
 	}
+
 private:
-	float m_duration{ 0 };
+	float m_duration{0};
 };
 
 TEST_CASE("INSTRUCTION")
@@ -54,41 +61,38 @@ TEST_CASE("INSTRUCTION")
 	uint8_t position = 3;
 	float duration = 5.5f;
 
-	int* i = new int;
+	int *i = new int;
 	delete i;
 	REQUIRE(i != nullptr);
 
-	void* v = static_cast<void*>(i);
-	Reasoner* r = static_cast<Reasoner*>(v);
+	void *v = static_cast<void *>(i);
+	Reasoner *r = static_cast<Reasoner *>(v);
 
-	auto greetings = GreetingsInstruction{ position, duration };
+	auto greetings = GreetingsInstruction{position, duration};
 	greetings.set_npc_reasoner(v, r);
 
 	REQUIRE(greetings.get_npc() == v);
 	REQUIRE(greetings.get_reasoner() == r);
-
 
 	auto ptr = greetings.clone();
 
 	REQUIRE(float_cmp(ptr->get_duration(), duration) == true);
 	REQUIRE(ptr->get_sequence_position() == position);
 
-
-	greetings = GreetingsInstruction{ uint8_t(duration), float(position) };
+	greetings = GreetingsInstruction{uint8_t(duration), float(position)};
 	REQUIRE(ptr->get_sequence_position() != greetings.get_sequence_position());
 }
 
 #include "attributes.h"
-
 
 TEST_CASE("ATTRIBUTES")
 {
 	auto npc_attributes = Attributes{};
 	auto go_attributes = Attributes{};
 
-	auto kenny = std::string{ "kenny" };
-	auto hugo = std::string{ "hugo" };
-	auto smiths = std::string{ "smiths" };
+	auto kenny = std::string{"kenny"};
+	auto hugo = std::string{"hugo"};
+	auto smiths = std::string{"smiths"};
 
 	npc_attributes.add(kenny);
 	npc_attributes.add(hugo);
@@ -134,7 +138,7 @@ TEST_CASE("ACTION")
 	{
 		auto tmp = Action{};
 
-		REQUIRE(tmp.get_name() == std::string{ "" });
+		REQUIRE(tmp.get_name() == std::string{""});
 		REQUIRE(tmp.get_full_cooldown() == 0.0f);
 		REQUIRE(tmp.get_cooldown() == 0.0f);
 		REQUIRE(tmp.get_score() == 0.0f);
@@ -142,24 +146,24 @@ TEST_CASE("ACTION")
 
 	SECTION("overloaded constructor")
 	{
-		auto name = std::string{ "test" };
-		auto tmp = Action{ name };
+		auto name = std::string{"test"};
+		auto tmp = Action{name};
 
 		REQUIRE(tmp.get_name() == name);
 	}
 
 	SECTION("copy constructor")
 	{
-		int* ptr = new int;
+		int *ptr = new int;
 		delete ptr;
-		Reasoner* r_ptr = static_cast<Reasoner*>(static_cast<void*>(ptr));
+		Reasoner *r_ptr = static_cast<Reasoner *>(static_cast<void *>(ptr));
 		Action original;
 		original.set_full_cooldown(10.0f);
 		original.set_on_cooldown();
 		original.set_name("hi");
 		original.set_npc_reasoner(ptr, r_ptr);
 		original.set_goal_change("eat", 0.4f);
-		original.add_instruction(GreetingsInstruction{ 0, 1.5f }.clone());
+		original.add_instruction(GreetingsInstruction{0, 1.5f}.clone());
 
 		REQUIRE(original.get_name() == "hi");
 		REQUIRE(original.get_full_cooldown() == 10.0f);
@@ -168,7 +172,7 @@ TEST_CASE("ACTION")
 		REQUIRE(original.get_reasoner() == r_ptr);
 		REQUIRE(float_cmp(original.get_change("eat"), 0.4f));
 
-		auto copy = Action{ original };
+		auto copy = Action{original};
 
 		REQUIRE(copy.get_cooldown() == original.get_cooldown());
 		REQUIRE(copy.get_full_cooldown() == original.get_full_cooldown());
@@ -180,16 +184,16 @@ TEST_CASE("ACTION")
 
 	SECTION("move constructor")
 	{
-		int* ptr = new int;
+		int *ptr = new int;
 		delete ptr;
-		Reasoner* r_ptr = static_cast<Reasoner*>(static_cast<void*>(ptr));
+		Reasoner *r_ptr = static_cast<Reasoner *>(static_cast<void *>(ptr));
 		Action original;
 		original.set_full_cooldown(10.0f);
 		original.set_on_cooldown();
 		original.set_name("hi");
 		original.set_npc_reasoner(ptr, r_ptr);
 		original.set_goal_change("eat", 0.4f);
-		original.add_instruction(GreetingsInstruction{ 0, 1.5f }.clone());
+		original.add_instruction(GreetingsInstruction{0, 1.5f}.clone());
 
 		REQUIRE(original.get_name() == "hi");
 		REQUIRE(original.get_full_cooldown() == 10.0f);
@@ -205,8 +209,7 @@ TEST_CASE("ACTION")
 		auto reasoner = original.get_reasoner();
 		auto instr = original.get_instructions().size();
 
-
-		auto copy = Action{ std::move(original) };
+		auto copy = Action{std::move(original)};
 
 		REQUIRE(copy.get_cooldown() == cooldown);
 		REQUIRE(copy.get_full_cooldown() == full_cooldown);
@@ -218,22 +221,19 @@ TEST_CASE("ACTION")
 
 	SECTION("effects")
 	{
-		auto eat = std::string{ "eat" };
-		auto sleep = std::string{ "sleep" };
-		auto drink = std::string{ "drink" };
+		auto eat = std::string{"eat"};
+		auto sleep = std::string{"sleep"};
+		auto drink = std::string{"drink"};
 
 		auto tmp = Action{};
 		tmp.set_goal_change(eat, 0.1f);
 		tmp.set_goal_change(sleep, -0.95f, 10.0f);
 		tmp.set_goal_change(drink, 0.999f);
 
-
-
 		REQUIRE(float_cmp(tmp.get_change(eat), 0.1f));
 		REQUIRE(float_cmp(tmp.get_change(sleep), -0.95f));
 		REQUIRE(float_cmp(tmp.get_change(drink), 0.999f));
 		REQUIRE(float_cmp(tmp.get_change("none"), 0.0f));
-
 
 		REQUIRE(float_cmp(tmp.get_goal_change_duration(sleep).duration, 10.0f));
 		REQUIRE(float_cmp(tmp.get_goal_change_duration(eat).duration, 0.0f));
@@ -245,9 +245,9 @@ TEST_CASE("ACTION")
 	{
 		auto tmp = Action{};
 
-		auto greetings2 = GreetingsInstruction{ 2, 1.5f };
-		auto greetings0 = GreetingsInstruction{ 0, 1.5f };
-		auto greetings1 = GreetingsInstruction{ 1, 1.5f };
+		auto greetings2 = GreetingsInstruction{2, 1.5f};
+		auto greetings0 = GreetingsInstruction{0, 1.5f};
+		auto greetings1 = GreetingsInstruction{1, 1.5f};
 
 		tmp.add_instruction(greetings1.clone());
 		tmp.add_instruction(greetings2.clone());
@@ -273,7 +273,7 @@ TEST_CASE("GROWTH")
 	{
 		float CHANGE = 10.0f;
 		float duration = 10.0f;
-		auto tmp_growth = TemporaryGrowth{ CHANGE, duration };
+		auto tmp_growth = TemporaryGrowth{CHANGE, duration};
 
 		REQUIRE(tmp_growth.get_change(duration / 2) == CHANGE / 2);
 		tmp_growth.decrease_duration(duration / 2);
@@ -290,7 +290,7 @@ TEST_CASE("GROWTH")
 		float change_start = 0.0f;
 		float change_end = 1.0f;
 
-		auto rand_growth = RandomGrowth{ change_start, change_end, start, end };
+		auto rand_growth = RandomGrowth{change_start, change_end, start, end};
 
 		float last = rand_growth.get_random(change_start, change_end);
 		for (int i = 0; i < 100; ++i)
@@ -309,7 +309,7 @@ TEST_CASE("GROWTH")
 		float start = 2.0f;
 		float end = 3.0f;
 
-		auto perm_growth = PermanentGrowth{ change, start, end };
+		auto perm_growth = PermanentGrowth{change, start, end};
 
 		REQUIRE(perm_growth.get_change((end - start) / 2, start / 2) == 0.0f);
 		REQUIRE(perm_growth.get_change((end - start) / 2, start + (end - start) / 2) == change / 2);
@@ -324,7 +324,7 @@ TEST_CASE("GOAL")
 	{
 		auto tmp = Goal{};
 
-		REQUIRE(tmp.get_name() == std::string{ "NULL" });
+		REQUIRE(tmp.get_name() == std::string{"NULL"});
 		REQUIRE(float_cmp(tmp.get_threshold(), 0.0f));
 		REQUIRE(float_cmp(tmp.get_value(), 0.0f));
 		REQUIRE(tmp.get_rank() == 1);
@@ -332,9 +332,9 @@ TEST_CASE("GOAL")
 
 	SECTION("overloaded constructor")
 	{
-		auto tmp = Goal{ "test" };
+		auto tmp = Goal{"test"};
 
-		REQUIRE(tmp.get_name() == std::string{ "test" });
+		REQUIRE(tmp.get_name() == std::string{"test"});
 		REQUIRE(float_cmp(tmp.get_threshold(), 0.0f));
 		REQUIRE(float_cmp(tmp.get_value(), 0.0f));
 		REQUIRE(tmp.get_rank() == 1);
@@ -385,8 +385,8 @@ TEST_CASE("GOAL")
 
 		SECTION("GROWTH")
 		{
-			auto tmp_growth = TemporaryGrowth{ 0.1f, 1.0f };
-			auto perm_growth = PermanentGrowth{ 0.1f, 0.0f, 1.0f };
+			auto tmp_growth = TemporaryGrowth{0.1f, 1.0f};
+			auto perm_growth = PermanentGrowth{0.1f, 0.0f, 1.0f};
 			auto goal = Goal{};
 
 			goal.add_growth(tmp_growth);
@@ -418,34 +418,33 @@ TEST_CASE("GOAL")
 
 TEST_CASE("LOGGER")
 {
-	Goal eat_g{ "eat" };
+	Goal eat_g{"eat"};
 	eat_g.set_rank(4);
 	eat_g.set_threshold(0.4f);
 	eat_g.set_value(0.4f);
 
-	Goal sleep_g{ "eat" };
+	Goal sleep_g{"eat"};
 	sleep_g.set_rank(3);
 	sleep_g.set_threshold(0.3f);
 	sleep_g.set_value(0.3f);
 
-	Goal support_g{ "eat" };
+	Goal support_g{"eat"};
 	support_g.set_rank(3);
 	support_g.set_threshold(0.3f);
 	support_g.set_value(0.3f);
 
-	Action eat_a{ "eat" };
+	Action eat_a{"eat"};
 	eat_a.set_score(0.444f);
 
-	Action sleep_a{ "eat" };
+	Action sleep_a{"eat"};
 	sleep_a.set_score(0.333f);
 
-	Action support_a{ "eat" };
+	Action support_a{"eat"};
 	support_a.set_score(0.555f);
 
 	GOALS goals;
 	goals.push_back(std::make_shared<Goal>(eat_g));
 	goals.push_back(std::make_shared<Goal>(sleep_g));
-
 
 	ACTIONS actions;
 	actions.push_back(std::make_shared<Action>(eat_a));
@@ -487,7 +486,7 @@ TEST_CASE("LOGGER")
 	logger.log(dummy_timestamp, goals, actions, current, "test source");
 	logger.log(dummy_timestamp, goals, actions, current);
 
-	//logger.save_to_file("tests");
+	// logger.save_to_file("tests");
 }
 
 #include "reasoner.h"
@@ -498,7 +497,7 @@ TEST_CASE("REASONER")
 
 	Reasoner r1, r2;
 
-	int* i = new int;
+	int *i = new int;
 	delete i;
 
 	r1.set_day_duration(10.0f);
@@ -534,7 +533,6 @@ TEST_CASE("REASONER")
 
 	r1.update_state(10.0f);
 	REQUIRE(r1.get_current_time() == 5.0f);
-
 
 	// add goals
 
@@ -578,10 +576,10 @@ TEST_CASE("REASONER")
 	// add actions
 	REQUIRE(r1.get_actions().size() == 0);
 
-	Action test{ "test" };
+	Action test{"test"};
 	test.set_full_cooldown(10.0f);
 
-	Action test2{ "test2" };
+	Action test2{"test2"};
 	test2.set_full_cooldown(10.0f);
 
 	r1.add_action(test);
@@ -599,11 +597,10 @@ TEST_CASE("REASONER")
 	auto a_test = r1.add_action(test);
 	auto a_test2 = r1.add_action(test2);
 
-
 	// UPDATE
 	// update goals
-	auto tmp_growth = TemporaryGrowth{ 0.5f, 0.8f };
-	auto perm_growth = PermanentGrowth{ 0.5f, 0.0f, 0.8f };
+	auto tmp_growth = TemporaryGrowth{0.5f, 0.8f};
+	auto perm_growth = PermanentGrowth{0.5f, 0.0f, 0.8f};
 	sleep_ptr->add_growth(perm_growth);
 
 	REQUIRE(sleep_ptr->get_value() == 0.0f);
@@ -649,16 +646,16 @@ TEST_CASE("REASONER")
 	sleep_ptr->set_value(0.5f);
 	drink_ptr->set_value(0.7f);
 
-	auto greetings = GreetingsInstruction{ 0, 10 };
-	Action eat_a{ "eat" };
+	auto greetings = GreetingsInstruction{0, 10};
+	Action eat_a{"eat"};
 	eat_a.add_instruction(greetings.clone());
 	eat_a.set_goal_change(eat_ptr->get_name(), -1.0f);
 
-	Action sleep_a{ "sleep" };
+	Action sleep_a{"sleep"};
 	sleep_a.add_instruction(greetings.clone());
 	sleep_a.set_goal_change(sleep_ptr->get_name(), -1.0f);
 
-	Action drink_a{ "drink" };
+	Action drink_a{"drink"};
 	drink_a.add_instruction(greetings.clone());
 	drink_a.set_goal_change(drink_ptr->get_name(), -1.0f);
 
@@ -688,8 +685,8 @@ TEST_CASE("REASONER")
 		evaluater.set_decision_strategy(DECISION::BEST_DISSATISFACTION);
 
 		// �bergrundbed�rfnisse
-		auto survive_g = evaluater.add_goal({ "survive" });
-		auto breathe_g = evaluater.add_goal({ "breathe" });
+		auto survive_g = evaluater.add_goal({"survive"});
+		auto breathe_g = evaluater.add_goal({"breathe"});
 
 		survive_g->set_rank(4);
 		survive_g->set_value(0.0f);
@@ -697,16 +694,16 @@ TEST_CASE("REASONER")
 		breathe_g->set_rank(4);
 		breathe_g->set_value(0.0f);
 
-		auto survive_a = evaluater.add_action(Action{ "survive" });
-		auto breathe_a = evaluater.add_action(Action{ "breathe" });
+		auto survive_a = evaluater.add_action(Action{"survive"});
+		auto breathe_a = evaluater.add_action(Action{"breathe"});
 
 		survive_a->set_goal_change(survive_g->get_name(), -1.0f);
 		breathe_a->set_goal_change(breathe_g->get_name(), -1.0f);
 
 		// grundbed�rfnisse
-		auto eat_g = evaluater.add_goal({ "eat" });
-		auto sleep_g = evaluater.add_goal({ "sleep" });
-		auto drink_g = evaluater.add_goal({ "drink" });
+		auto eat_g = evaluater.add_goal({"eat"});
+		auto sleep_g = evaluater.add_goal({"sleep"});
+		auto drink_g = evaluater.add_goal({"drink"});
 
 		eat_g->set_rank(3);
 		eat_g->set_value(0.2f);
@@ -723,27 +720,27 @@ TEST_CASE("REASONER")
 
 TEST_CASE("BROADCASTER")
 {
-	auto& broadcaster = Broadcaster::get_instance();
+	auto &broadcaster = Broadcaster::get_instance();
 	Reasoner r1;
-	auto attributes_r1 = Attributes{ "hugo", "smith" };
-	REQUIRE(attributes_r1.contains({ "hugo", "smith" }) == true);
+	auto attributes_r1 = Attributes{"hugo", "smith"};
+	REQUIRE(attributes_r1.contains({"hugo", "smith"}) == true);
 
 	Reasoner r2;
-	auto attributes_r2 = Attributes{ "clemens", "smith" };
-	REQUIRE(attributes_r2.contains({ "clemens", "smith" }) == true);
+	auto attributes_r2 = Attributes{"clemens", "smith"};
+	REQUIRE(attributes_r2.contains({"clemens", "smith"}) == true);
 
 	Reasoner r3;
 
-	auto attributes_hugo = Attributes{ "hugo" };
-	auto attributes_clemens = Attributes{ "clemens" };
-	auto attributes_smith = Attributes{ "smith" };
+	auto attributes_hugo = Attributes{"hugo"};
+	auto attributes_clemens = Attributes{"clemens"};
+	auto attributes_smith = Attributes{"smith"};
 
 	broadcaster.add_reasoner(&r1, attributes_r1);
 	broadcaster.add_reasoner(&r3);
 
-	broadcaster.add_action({ "hugo" }, attributes_hugo);
-	broadcaster.add_action({ "clemens" }, attributes_clemens);
-	auto smith = broadcaster.add_action({ "smith" }, attributes_smith);
+	broadcaster.add_action({"hugo"}, attributes_hugo);
+	broadcaster.add_action({"clemens"}, attributes_clemens);
+	auto smith = broadcaster.add_action({"smith"}, attributes_smith);
 
 	broadcaster.add_reasoner(&r2, attributes_r2);
 
@@ -751,12 +748,9 @@ TEST_CASE("BROADCASTER")
 	REQUIRE(r2.get_actions().size() == 2);
 	REQUIRE(r3.get_actions().size() == 3);
 
-
 	broadcaster.remove_action(smith);
 
 	REQUIRE(r1.get_actions().size() == 1);
 	REQUIRE(r2.get_actions().size() == 1);
 	REQUIRE(r3.get_actions().size() == 2);
 }
-
-

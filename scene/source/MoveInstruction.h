@@ -26,7 +26,7 @@ public:
 		m_route->setMaxAngle(1.0f);
 	};
 
-	void set_text(const std::string& text)
+	void set_text(const std::string &text)
 	{
 		m_text = text;
 	}
@@ -43,17 +43,20 @@ public:
 		return (distance.lengthFast() - m_arrive_radius) / m_movement_speed;
 	}
 
-	virtual GOB::ExecuteSignal execute() override {
-		if (m_destination_node == nullptr) return GOB::ExecuteSignal::DONE;
+	virtual GOB::ExecuteSignal execute() override
+	{
+		if (m_destination_node == nullptr)
+			return GOB::ExecuteSignal::DONE;
 		auto destination = m_destination_node->getWorldPosition();
 
-		if (arrived_at(destination)) return GOB::ExecuteSignal::DONE;
+		if (arrived_at(destination))
+			return GOB::ExecuteSignal::DONE;
 
 		// set npc text
-		if(m_text.size() != 0)
+		if (m_text.size() != 0)
 			m_component->set_text(m_text);
 		else
-			m_component->set_text(std::string{ "geht zu " } + m_destination_node->getName());
+			m_component->set_text(std::string{"geht zu "} + m_destination_node->getName());
 
 		return GOB::ExecuteSignal(approach(destination));
 	};
@@ -63,7 +66,8 @@ public:
 		return m_interruptable;
 	}
 
-	virtual std::unique_ptr<GOB::Instruction> clone() const override {
+	virtual std::unique_ptr<GOB::Instruction> clone() const override
+	{
 		return std::make_unique<MoveInstruction>(*this);
 	};
 
@@ -115,12 +119,12 @@ public:
 
 	void update_orientation(Vec3 direction)
 	{
-		quat target_rotation{ Math::setTo(vec3_zero, direction, vec3_up, MathLib::AXIS::AXIS_Y) };
+		quat target_rotation{Math::setTo(vec3_zero, direction, vec3_up, MathLib::AXIS::AXIS_Y)};
 
 		quat current_rotation = m_node->getWorldRotation();
 		current_rotation = Math::slerp(current_rotation, target_rotation, Game::getIFps() * m_rotation_stiffness / 2);
 		m_node->setWorldRotation(current_rotation);
-		
+
 		current_rotation = m_node->getChild(0)->getChild(0)->getWorldRotation();
 		current_rotation = Math::slerp(current_rotation, target_rotation, Game::getIFps() * m_rotation_stiffness);
 		m_node->getChild(0)->getChild(0)->setWorldRotation(current_rotation);
@@ -138,5 +142,4 @@ protected:
 	float m_rotation_stiffness = 4.0f;
 
 	PathRoutePtr m_route;
-
 };

@@ -42,17 +42,16 @@ int AppSystemLogic::init()
 		std::string tmp;
 		float number;
 		std::getline(config, tmp);
-		std::stringstream ss{ tmp };
+		std::stringstream ss{tmp};
 
 		m_shutdown_timer = 1;
-	
+
 		while (ss >> number)
 		{
 			m_shutdown_timer *= number;
 		}
 		++m_shutdown_timer;
 	}
-
 
 	// Write here code to be called on engine initialization.
 	Unigine::App::setBackgroundUpdate(true);

@@ -16,22 +16,29 @@ namespace GOB
 	{
 	public:
 		// getter
-		static Broadcaster& get_instance();
+		static Broadcaster &get_instance();
 
 		// etc
-		ACTION add_action(const Action& action, const Attributes& attributes = {});
-		ACTION add_action(ACTION action, const Attributes& attributes = {});
-		void remove_action(ACTION action, const Attributes& attributes = {});
+		ACTION add_action(const Action &action, const Attributes &attributes = {});
+		ACTION add_action(ACTION action, const Attributes &attributes = {});
+		void remove_action(ACTION action, const Attributes &attributes = {});
 
-		void add_reasoner(Reasoner* reasoner, const Attributes& attributes = {});
-		void remove_reasoner(Reasoner* reasoner);
+		void add_reasoner(Reasoner *reasoner, const Attributes &attributes = {});
+		void remove_reasoner(Reasoner *reasoner);
 
 	private:
-		struct ActionAttributes { ACTION action; Attributes attributes; };
+		struct ActionAttributes
+		{
+			ACTION action;
+			Attributes attributes;
+		};
 		std::vector<ActionAttributes> m_actions;
 
-		struct ReasonerAttributes { Reasoner* reasoner; Attributes attributes; };
+		struct ReasonerAttributes
+		{
+			Reasoner *reasoner;
+			Attributes attributes;
+		};
 		std::vector<ReasonerAttributes> m_reasoners;
 	};
 }
-

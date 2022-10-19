@@ -34,14 +34,13 @@ namespace GOB
 		// critical
 
 		// overloadable for custom conversion
-		virtual void set_npc_reasoner(void* npc, Reasoner* reasoner);
+		virtual void set_npc_reasoner(void *npc, Reasoner *reasoner);
 
 		// getter
 		uint8_t get_sequence_position() const;
 
-
 		/* UPDATE STAGE */
-		// gets executed once when instruction is set as active 
+		// gets executed once when instruction is set as active
 		virtual void init();
 
 		// executed every frame when active
@@ -55,13 +54,12 @@ namespace GOB
 		// true if instruction is ignorable during interrupt
 		virtual bool is_ignorable() const;
 
-		// get approx. remaining duration 
+		// get approx. remaining duration
 		virtual float get_duration() const = 0;
 
-
 	protected:
-		void* m_npc = nullptr;
-		Reasoner* m_reasoner = nullptr;
+		void *m_npc = nullptr;
+		Reasoner *m_reasoner = nullptr;
 
 		uint8_t m_sequence_position = 0;
 	};

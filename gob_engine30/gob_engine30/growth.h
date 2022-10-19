@@ -12,9 +12,9 @@ namespace GOB
 		virtual ~PermanentGrowth() = default;
 
 		// start/end in daytime seconds
-		// e.g. day_duration = 100 s with 0s - 50s: day; 50s - 100s: night 
+		// e.g. day_duration = 100 s with 0s - 50s: day; 50s - 100s: night
 		// growth only at night -> start = 50, end = 100
-		// change: how much should it grow in the given interval 
+		// change: how much should it grow in the given interval
 		PermanentGrowth(float change, float start, float end);
 
 		float get_change(float delta, float current_time) const;
@@ -26,7 +26,7 @@ namespace GOB
 		float m_start = 0.0f;
 		float m_end = 0.0f;
 	};
-	
+
 	class TemporaryGrowth
 	{
 	public:

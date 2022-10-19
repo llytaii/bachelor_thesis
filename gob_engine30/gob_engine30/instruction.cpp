@@ -3,12 +3,12 @@
 namespace GOB
 {
 	Instruction::Instruction(uint8_t sequence_position)
-		: m_sequence_position{ sequence_position }
+		: m_sequence_position{sequence_position}
 	{
 	}
 
 	// critical
-	void Instruction::set_npc_reasoner(void* npc, Reasoner* reasoner)
+	void Instruction::set_npc_reasoner(void *npc, Reasoner *reasoner)
 	{
 		m_npc = npc;
 		m_reasoner = reasoner;

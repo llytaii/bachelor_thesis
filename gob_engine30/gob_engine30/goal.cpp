@@ -2,16 +2,17 @@
 
 namespace GOB
 {
-	Goal::Goal(const std::string& name)
-		: m_name{ name }
-	{}
+	Goal::Goal(const std::string &name)
+		: m_name{name}
+	{
+	}
 
 	// GETTER
-	float Goal::get_value() const 
+	float Goal::get_value() const
 	{
 		return m_value;
 	}
-	float Goal::get_threshold() const 
+	float Goal::get_threshold() const
 	{
 		return m_threshold;
 	}
@@ -29,7 +30,7 @@ namespace GOB
 	}
 
 	// DISCONTENTMENT
-	float Goal::get_discontentment(float new_val) 
+	float Goal::get_discontentment(float new_val)
 	{
 		new_val = clamp(new_val);
 		return new_val * new_val;
@@ -38,8 +39,8 @@ namespace GOB
 	float Goal::get_hierarchical_discontentment(float new_val)
 	{
 		new_val = clamp(new_val);
-		// rank^2 + 1 * value ^ 4 
-		//return (m_rank * m_rank + 1) * new_val * new_val * new_val * new_val;
+		// rank^2 + 1 * value ^ 4
+		// return (m_rank * m_rank + 1) * new_val * new_val * new_val * new_val;
 		return m_rank * new_val * new_val;
 	}
 
@@ -59,28 +60,28 @@ namespace GOB
 		float change = 0.0f;
 
 		// change day0
-		for (const auto& growth : m_permanent_growths)
+		for (const auto &growth : m_permanent_growths)
 			change += growth.get_change(remaining, current_time + remaining);
 
-		for (const auto& growth : m_random_growths)
+		for (const auto &growth : m_random_growths)
 			change += growth.get_change(remaining, current_time + remaining);
 
 		// change day1
-		for (const auto& growth : m_permanent_growths)
+		for (const auto &growth : m_permanent_growths)
 			change += growth.get_change(next, next);
 
-		for (const auto& growth : m_random_growths)
+		for (const auto &growth : m_random_growths)
 			change += growth.get_change(next, next);
 
 		// temporary
-		for (const auto& growth : m_temporary_growths)
+		for (const auto &growth : m_temporary_growths)
 			change += growth.get_change(delta_current);
 
 		return change;
 	}
 
-	// SETTER 
-	void Goal::set_value(const float insistance) 
+	// SETTER
+	void Goal::set_value(const float insistance)
 	{
 		m_value = clamp(insistance);
 	}
@@ -92,7 +93,6 @@ namespace GOB
 	{
 		m_rank = rank;
 	}
-	
 
 	// ETC
 	void Goal::change_value(const float change)
@@ -100,15 +100,15 @@ namespace GOB
 		m_value = clamp(m_value + change);
 	}
 
-	void Goal::add_growth(const PermanentGrowth& growth)
+	void Goal::add_growth(const PermanentGrowth &growth)
 	{
 		m_permanent_growths.push_back(growth);
 	}
-	void Goal::add_growth(const RandomGrowth& growth)
+	void Goal::add_growth(const RandomGrowth &growth)
 	{
 		m_random_growths.push_back(growth);
 	}
-	void Goal::add_growth(const TemporaryGrowth& growth)
+	void Goal::add_growth(const TemporaryGrowth &growth)
 	{
 		m_temporary_growths.push_back(growth);
 	}
@@ -117,13 +117,13 @@ namespace GOB
 	{
 		float change = 0.0f;
 
-		for(auto& growth : m_permanent_growths)
+		for (auto &growth : m_permanent_growths)
 			change += growth.get_change(delta, current_time);
 
-		for(auto& growth : m_random_growths)
+		for (auto &growth : m_random_growths)
 			change += growth.get_change(delta, current_time);
 
-		for (auto& growth : m_temporary_growths)
+		for (auto &growth : m_temporary_growths)
 		{
 			change += growth.get_change(delta);
 			growth.decrease_duration(delta);
@@ -134,7 +134,7 @@ namespace GOB
 
 	void Goal::regenerate_random_growths()
 	{
-		for (auto& growth : m_random_growths)
+		for (auto &growth : m_random_growths)
 			growth.regenerate_growth();
 	}
 
@@ -150,13 +150,13 @@ namespace GOB
 		}
 	}
 
-
-
 	// helper
-	float Goal::clamp(float val) {
-		if (val < 0.0f) val = 0.0f;
-		if (val > 1.0f) val = 1.0f;
+	float Goal::clamp(float val)
+	{
+		if (val < 0.0f)
+			val = 0.0f;
+		if (val > 1.0f)
+			val = 1.0f;
 		return val;
 	}
 }
-

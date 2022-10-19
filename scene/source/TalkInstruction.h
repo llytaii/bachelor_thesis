@@ -39,11 +39,11 @@ class TalkInstruction
 public:
 	virtual ~TalkInstruction() = default;
 
-	TalkInstruction(const TalkInstruction& other) = default;
+	TalkInstruction(const TalkInstruction &other) = default;
 
 	// initiator
 	TalkInstruction(NodePtr komplize, float duration, float interruptable, uint8_t sequence_position = 0)
-		: MoveInstruction{ sequence_position }
+		: MoveInstruction{sequence_position}
 	{
 		m_komplize = komplize;
 		m_component_komplize = ComponentSystem::get()->getComponent<NPC>(m_komplize);
@@ -64,7 +64,7 @@ public:
 
 	// komplize
 	TalkInstruction(NodePtr initiator, std::shared_ptr<Communication> com, uint8_t sequence_position = 0)
-		: MoveInstruction{ sequence_position }
+		: MoveInstruction{sequence_position}
 	{
 		m_initiator = initiator;
 		m_component_initiator = ComponentSystem::get()->getComponent<NPC>(m_initiator);
@@ -84,7 +84,8 @@ public:
 		{
 		case TalkInstruction::APPROACH:
 			m_component->set_text("will reden");
-			if (!MoveInstruction::approach(m_komplize->getWorldPosition())) return GOB::ExecuteSignal::CONTINUE;
+			if (!MoveInstruction::approach(m_komplize->getWorldPosition()))
+				return GOB::ExecuteSignal::CONTINUE;
 
 			m_com->p_goal = std::make_shared<GOB::Goal>("talk back");
 			m_com->p_goal->set_rank(2);
@@ -94,7 +95,7 @@ public:
 
 			m_com->p_action = std::make_shared<GOB::Action>("talk back");
 			m_com->p_action->set_goal_change(m_com->p_goal->get_name(), -1.0f);
-			m_com->p_action->add_instruction(TalkInstruction{ m_node, m_com }.clone());
+			m_com->p_action->add_instruction(TalkInstruction{m_node, m_com}.clone());
 
 			m_reasoner_komplize->add_action(*m_com->p_action);
 
@@ -175,7 +176,7 @@ public:
 
 	virtual void init() override
 	{
-		if(m_is_initiator)
+		if (m_is_initiator)
 			m_com->a_action = m_reasoner->get_current_action()->get_id();
 	}
 
@@ -230,11 +231,10 @@ public:
 	}
 
 private:
-
 	// initiator
 	NodePtr m_komplize;
-	NPC* m_component_komplize = nullptr;
-	GOB::Reasoner* m_reasoner_komplize = nullptr;
+	NPC *m_component_komplize = nullptr;
+	GOB::Reasoner *m_reasoner_komplize = nullptr;
 
 	float m_accept_wait_duration = 3.0f;
 
@@ -246,8 +246,8 @@ private:
 
 	// komplize
 	NodePtr m_initiator;
-	NPC* m_component_initiator = nullptr;
-	GOB::Reasoner* m_reasoner_initiator = nullptr;
+	NPC *m_component_initiator = nullptr;
+	GOB::Reasoner *m_reasoner_initiator = nullptr;
 
 	// both
 	std::shared_ptr<Communication> m_com;

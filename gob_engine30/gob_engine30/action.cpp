@@ -16,84 +16,82 @@ namespace GOB
 		m_id = s_id++;
 	}
 
-	Action::Action(const std::string& name)
+	Action::Action(const std::string &name)
 		: Action{}
 	{
 		m_name = name;
 	}
 
-	Action::Action(const Action& other)
+	Action::Action(const Action &other)
 	{
 		*this = other;
 	}
 
-	Action::Action(Action&& other) noexcept
+	Action::Action(Action &&other) noexcept
 	{
 		*this = std::move(other);
 	}
 
-	Action& Action::operator=(const Action& other)
+	Action &Action::operator=(const Action &other)
 	{
 		if (this != &other)
 		{
-			m_id					= other.m_id;
+			m_id = other.m_id;
 
-			m_active_instruction	= other.m_active_instruction;
+			m_active_instruction = other.m_active_instruction;
 
-			m_cooldown				= other.m_cooldown;
-			m_score					= other.m_score;
+			m_cooldown = other.m_cooldown;
+			m_score = other.m_score;
 
-			m_npc					= other.m_npc;
-			m_reasoner				= other.m_reasoner;
+			m_npc = other.m_npc;
+			m_reasoner = other.m_reasoner;
 
-			for (const auto& i : other.m_instructions)
+			for (const auto &i : other.m_instructions)
 				m_instructions.push_back(i->clone());
 
-			m_name					= other.m_name;
-			m_full_cooldown			= other.m_full_cooldown;
+			m_name = other.m_name;
+			m_full_cooldown = other.m_full_cooldown;
 
-			for (const auto& i : other.m_template_instructions)
+			for (const auto &i : other.m_template_instructions)
 				m_template_instructions.push_back(i->clone());
 
-			m_affected_goals		= other.m_affected_goals;
-
+			m_affected_goals = other.m_affected_goals;
 		}
 		return *this;
 	}
 
-	Action& Action::operator=(Action&& other) noexcept
+	Action &Action::operator=(Action &&other) noexcept
 	{
 		if (this != &other)
 		{
-			m_id					= other.m_id;
+			m_id = other.m_id;
 
-			m_active_instruction	= other.m_active_instruction;
+			m_active_instruction = other.m_active_instruction;
 
-			m_cooldown				= other.m_cooldown;
-			m_score					= other.m_score;
+			m_cooldown = other.m_cooldown;
+			m_score = other.m_score;
 
-			m_npc					= other.m_npc;
-			m_reasoner				= other.m_reasoner;
+			m_npc = other.m_npc;
+			m_reasoner = other.m_reasoner;
 
-			m_instructions			= std::move(other.m_instructions);
+			m_instructions = std::move(other.m_instructions);
 
-			m_name					= std::move(other.m_name);
-			m_full_cooldown			= other.m_full_cooldown;
+			m_name = std::move(other.m_name);
+			m_full_cooldown = other.m_full_cooldown;
 
 			m_template_instructions = std::move(m_template_instructions);
-			m_affected_goals		= std::move(other.m_affected_goals);
+			m_affected_goals = std::move(other.m_affected_goals);
 		}
 		return *this;
 	}
 
-
 	// critical
-	void Action::set_npc_reasoner(void* npc, Reasoner* reasoner)
+	void Action::set_npc_reasoner(void *npc, Reasoner *reasoner)
 	{
-		for (auto& i : m_template_instructions)
+		for (auto &i : m_template_instructions)
 			i->set_npc_reasoner(npc, reasoner);
 
-		for (auto& i : m_instructions)
+		for (auto &i : m_instructions)
 			i->set_npc_reasoner(npc, reasoner);
 
 		m_npc = npc;
@@ -132,7 +130,7 @@ namespace GOB
 	float Action::get_full_duration() const
 	{
 		float duration = 0.0f;
-		for (auto& i : m_template_instructions)
+		for (auto &i : m_template_instructions)
 			duration += i->get_duration();
 		return duration;
 	}
@@ -142,17 +140,17 @@ namespace GOB
 		return m_name;
 	}
 
-	void* Action::get_npc() const
+	void *Action::get_npc() const
 	{
 		return m_npc;
 	}
 
-	Reasoner* Action::get_reasoner() const
+	Reasoner *Action::get_reasoner() const
 	{
 		return m_reasoner;
 	}
 
-	CHANGE Action::get_goal_change_duration(const std::string& name) const
+	CHANGE Action::get_goal_change_duration(const std::string &name) const
 	{
 		auto itr = m_affected_goals.find(name);
 		if (itr != m_affected_goals.end())
@@ -160,32 +158,32 @@ namespace GOB
 		return {};
 	}
 
-	float Action::get_change(const std::string& name) const
+	float Action::get_change(const std::string &name) const
 	{
 		return get_goal_change_duration(name).change;
 	}
 
-	float Action::get_change(const GOAL& goal) const
+	float Action::get_change(const GOAL &goal) const
 	{
-		if (goal == nullptr) return 0.0f;
+		if (goal == nullptr)
+			return 0.0f;
 		return get_change(goal->get_name());
 	}
 
-	float Action::get_change(const Goal& goal) const
+	float Action::get_change(const Goal &goal) const
 	{
 		return get_change(goal.get_name());
 	}
 
-	const GOAL_CHANGE_MAP& Action::get_affected_goals() const
+	const GOAL_CHANGE_MAP &Action::get_affected_goals() const
 	{
 		return m_affected_goals;
 	}
 
-	const INSTRUCTIONS& Action::get_instructions() const
+	const INSTRUCTIONS &Action::get_instructions() const
 	{
 		return m_instructions;
 	}
-
 
 	// setter
 	void Action::set_full_cooldown(float cooldown)
@@ -214,22 +212,22 @@ namespace GOB
 		m_score = round_score(score);
 	}
 
-	void Action::set_name(const std::string& name)
+	void Action::set_name(const std::string &name)
 	{
 		m_name = name;
 	}
 
-	void Action::set_goal_change(const std::string& name, float change, float duration)
+	void Action::set_goal_change(const std::string &name, float change, float duration)
 	{
-		m_affected_goals[name] = { change, duration };
+		m_affected_goals[name] = {change, duration};
 	}
 
-	void Action::set_goal_change(const GOAL& goal, float change, float duration)
+	void Action::set_goal_change(const GOAL &goal, float change, float duration)
 	{
 		set_goal_change(goal->get_name(), change, duration);
 	}
 
-	void Action::set_goal_change(const Goal& goal, float change, float duration)
+	void Action::set_goal_change(const Goal &goal, float change, float duration)
 	{
 		set_goal_change(goal.get_name(), change, duration);
 	}
@@ -238,17 +236,19 @@ namespace GOB
 	// execution
 	void Action::init()
 	{
-		if (m_instructions.size() == 0) return;
+		if (m_instructions.size() == 0)
+			return;
 		m_instructions[m_active_instruction]->init();
 	}
 
 	ExecuteSignal Action::execute()
 	{
-		if (m_instructions.size() == 0) return ExecuteSignal::DONE;
+		if (m_instructions.size() == 0)
+			return ExecuteSignal::DONE;
 
 		ExecuteSignal signal = m_instructions[m_active_instruction]->execute();
 
-		if(signal == ExecuteSignal::DONE)
+		if (signal == ExecuteSignal::DONE)
 		{
 			m_instructions[m_active_instruction]->done();
 			if (advance_instruction() == false)
@@ -272,7 +272,8 @@ namespace GOB
 
 	bool Action::interrupt()
 	{
-		if (m_instructions.size() == 0) return true;
+		if (m_instructions.size() == 0)
+			return true;
 
 		while (m_instructions[m_active_instruction]->is_ignorable())
 		{
@@ -283,36 +284,37 @@ namespace GOB
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	void Action::abort()
 	{
-		if (m_instructions.size() == 0) return;
+		if (m_instructions.size() == 0)
+			return;
 		m_instructions[m_active_instruction]->abort();
 		reset_instructions();
 	}
-
 
 	void Action::reset_instructions()
 	{
 		m_active_instruction = 0;
 
 		m_instructions.clear();
-		for (const auto& i : m_template_instructions)
+		for (const auto &i : m_template_instructions)
 			m_instructions.push_back(i->clone());
 	}
 
-	void Action::add_instruction(const INSTRUCTION& instruction)
+	void Action::add_instruction(const INSTRUCTION &instruction)
 	{
-		if (instruction == nullptr) return;
+		if (instruction == nullptr)
+			return;
 		auto i = instruction->clone();
 		i->set_npc_reasoner(m_npc, m_reasoner);
 		m_template_instructions.push_back(std::move(i));
 		std::sort(m_template_instructions.begin(), m_template_instructions.end(),
-			[](INSTRUCTION& first, INSTRUCTION& second)
-			{ return first->get_sequence_position() < second->get_sequence_position(); });
+				  [](INSTRUCTION &first, INSTRUCTION &second)
+				  { return first->get_sequence_position() < second->get_sequence_position(); });
 		reset_instructions();
 	}
 }

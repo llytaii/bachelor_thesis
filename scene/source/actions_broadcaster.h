@@ -10,7 +10,7 @@ public:
 	COMPONENT_DEFINE(ActionBroadcaster, ComponentBase)
 	COMPONENT_INIT(init)
 
-	// default attributes if none are set for an action 
+	// default attributes if none are set for an action
 	PROP_ARRAY(String, m_default_attributes, "Default Attributes")
 
 	// actions
@@ -35,7 +35,7 @@ public:
 			PROP_PARAM(Node, destination, "Destination")
 			PROP_PARAM(Float, arrive_radius, 0.1f, "Arrive Radius");
 			PROP_PARAM(Int, interruptable, 1, "Interruptable", "0 = not interruptable", "", "my_type=2;max=1; min=0")
-			PROP_PARAM(Int, sequence_position, 0,"Order Position", "", "", "my_type=2;max=255;min=0")
+			PROP_PARAM(Int, sequence_position, 0, "Order Position", "", "", "my_type=2;max=255;min=0")
 			PROP_PARAM(String, text)
 			PROP_PARAM(Float, speed)
 		};
@@ -47,7 +47,7 @@ public:
 			PROP_ARRAY(Node, scared_person, "ScaredPersons")
 			PROP_PARAM(Float, arrive_radius, 0.1f, "Arrive Radius");
 			PROP_PARAM(Int, interruptable, 1, "Interruptable", "0 = not interruptable", "", "my_type=2;max=1; min=0")
-			PROP_PARAM(Int, sequence_position, 0,"Order Position", "", "", "my_type=2;max=255;min=0")
+			PROP_PARAM(Int, sequence_position, 0, "Order Position", "", "", "my_type=2;max=255;min=0")
 			PROP_PARAM(String, text)
 			PROP_PARAM(Float, speed)
 		};
@@ -56,7 +56,7 @@ public:
 		struct PropDoInstruction : public ComponentStruct
 		{
 			PROP_PARAM(Node, destination, "Destination")
-			PROP_PARAM(Int, sequence_position, 0,"Order Position", "", "", "my_type=2;max=255;min=0")
+			PROP_PARAM(Int, sequence_position, 0, "Order Position", "", "", "my_type=2;max=255;min=0")
 			PROP_PARAM(Float, duration, 10.0f, "Duration in Minutes", "Action Duration", "", "my_type=2;max=24;min=0");
 			PROP_PARAM(Float, interrupt_progress, 1.0f, "Interrupt Progress in % left\ne.g. 0.7 = 70% of instruction has to be done", "", "", "my_type=2;max=1;min=0");
 			PROP_PARAM(String, task, "Task")
@@ -65,7 +65,7 @@ public:
 		};
 		PROP_ARRAY_STRUCT(PropDoInstruction, do_instructions, "Do Instructions")
 
-		struct PropTalkInstruction: public ComponentStruct
+		struct PropTalkInstruction : public ComponentStruct
 		{
 			PROP_PARAM(Node, complice, "Complice")
 			PROP_PARAM(Float, duration, 10.0f, "Duration in Minutes", "Action Duration", "", "my_type=2;max=24;min=0");
@@ -77,8 +77,6 @@ public:
 	};
 	PROP_ARRAY_STRUCT(Action, prop_actions)
 
-
 private:
 	void init();
 };
-

@@ -11,7 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #include "AppEditorLogic.h"
 
 // Editor logic, it takes effect only when the UnigineEditor is loaded.

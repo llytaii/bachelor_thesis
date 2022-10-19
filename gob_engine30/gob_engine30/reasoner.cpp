@@ -13,7 +13,6 @@ namespace GOB
 	size_t Reasoner::s_id = 0;
 #endif // GOB_ENABLE_LOGGING
 
-
 	// rule of 5
 	Reasoner::Reasoner()
 	{
@@ -22,17 +21,17 @@ namespace GOB
 #endif // GOB_ENABLE_LOGGING
 	}
 
-	Reasoner::Reasoner(const Reasoner& other)
+	Reasoner::Reasoner(const Reasoner &other)
 	{
 		*this = other;
 	}
 
-	Reasoner::Reasoner(Reasoner&& other) noexcept
+	Reasoner::Reasoner(Reasoner &&other) noexcept
 	{
 		*this = std::move(other);
 	}
 
-	Reasoner& Reasoner::operator=(const Reasoner& other)
+	Reasoner &Reasoner::operator=(const Reasoner &other)
 	{
 		if (this != &other)
 		{
@@ -51,21 +50,23 @@ namespace GOB
 			set_evaluate_strategy(m_evaluate_strat);
 			set_redeem_strategy(m_redeem_strat);
 
-			for (const auto& goal : other.m_goals)
+			for (const auto &goal : other.m_goals)
 			{
-				if (goal == nullptr) continue;
+				if (goal == nullptr)
+					continue;
 				m_goals.push_back(std::make_shared<Goal>(*goal));
 			}
 
-			for (const auto& action : other.m_actions)
+			for (const auto &action : other.m_actions)
 			{
-				if (action == nullptr) continue;
+				if (action == nullptr)
+					continue;
 				m_actions.push_back(std::make_shared<Action>(*action));
 			}
 
 			auto itr_current = std::find_if(m_actions.begin(), m_actions.end(),
-				[other](const ACTION _action)
-				{return _action->get_name() == other.get_current_action()->get_name(); });
+											[other](const ACTION _action)
+											{ return _action->get_name() == other.get_current_action()->get_name(); });
 
 			if (itr_current == m_actions.end())
 				m_active_action = nullptr;
@@ -75,7 +76,7 @@ namespace GOB
 		return *this;
 	}
 
-	Reasoner& Reasoner::operator=(Reasoner&& other) noexcept
+	Reasoner &Reasoner::operator=(Reasoner &&other) noexcept
 	{
 		if (this != &other)
 		{
@@ -108,7 +109,7 @@ namespace GOB
 	}
 #endif // GOB_ENABLE_LOGGING
 
-	void* Reasoner::get_npc() const
+	void *Reasoner::get_npc() const
 	{
 		return m_npc;
 	}
@@ -149,11 +150,12 @@ namespace GOB
 		m_daytime = time;
 	}
 
-	void Reasoner::set_npc(void* npc)
+	void Reasoner::set_npc(void *npc)
 	{
-		for (auto& action : m_actions)
+		for (auto &action : m_actions)
 		{
-			if (action == nullptr) continue;
+			if (action == nullptr)
+				continue;
 			action->set_npc_reasoner(npc, this);
 		}
 		m_npc = npc;
@@ -257,56 +259,60 @@ namespace GOB
 	}
 
 	// goals
-	GOAL Reasoner::add_goal(const Goal& goal) {
-		for (const auto& g : m_goals)
+	GOAL Reasoner::add_goal(const Goal &goal)
+	{
+		for (const auto &g : m_goals)
 			if (g->get_name() == goal.get_name())
 				return nullptr;
 
 		auto g = std::make_shared<Goal>(goal);
 		m_goals.push_back(g);
 		std::sort(m_goals.begin(), m_goals.end(),
-			[](const GOAL& first, const GOAL& second)
-			{ return first->get_rank() > second->get_rank();  });
+				  [](const GOAL &first, const GOAL &second)
+				  { return first->get_rank() > second->get_rank(); });
 		return g;
 	}
 
-	GOAL Reasoner::get_goal(const std::string& name) {
+	GOAL Reasoner::get_goal(const std::string &name)
+	{
 		auto itr = std::find_if(m_goals.begin(), m_goals.end(),
-			[&](const GOAL& goal)
-			{ return goal->get_name() == name; });
+								[&](const GOAL &goal)
+								{ return goal->get_name() == name; });
 
 		if (itr != m_goals.end())
 			return *itr;
 		return nullptr;
 	}
 
-	void Reasoner::remove_goal(const std::string& name)
+	void Reasoner::remove_goal(const std::string &name)
 	{
 		auto itr = std::find_if(m_goals.begin(), m_goals.end(),
-			[&](const GOAL& goal)
-			{return goal->get_name() == name; });
+								[&](const GOAL &goal)
+								{ return goal->get_name() == name; });
 
-		if (itr == m_goals.end()) return;
+		if (itr == m_goals.end())
+			return;
 
 		m_goals.erase(itr);
 		std::sort(m_goals.begin(), m_goals.end(),
-			[](const GOAL& first, const GOAL& second)
-			{ return first->get_rank() > second->get_rank();  });
+				  [](const GOAL &first, const GOAL &second)
+				  { return first->get_rank() > second->get_rank(); });
 	}
 
-	const GOALS& Reasoner::get_goals() const
+	const GOALS &Reasoner::get_goals() const
 	{
 		return m_goals;
 	}
 
-
 	// actions
 
-	ACTION Reasoner::add_action(const Action& action)
+	ACTION Reasoner::add_action(const Action &action)
 	{
 		auto itr = std::find_if(m_actions.begin(), m_actions.end(),
-			[&](const ACTION& a) { return a->get_id() == action.get_id(); });
-		if (itr != m_actions.end()) return nullptr;
+								[&](const ACTION &a)
+								{ return a->get_id() == action.get_id(); });
+		if (itr != m_actions.end())
+			return nullptr;
 
 		auto a = std::make_shared<Action>(action);
 		a->set_npc_reasoner(m_npc, this);
@@ -318,15 +324,16 @@ namespace GOB
 	void Reasoner::remove_action(size_t id)
 	{
 		auto itr = std::find_if(m_actions.begin(), m_actions.end(),
-			[=](const ACTION& action)
-			{ return action->get_id() == id; });
+								[=](const ACTION &action)
+								{ return action->get_id() == id; });
 
-		if (itr == m_actions.end()) return;
+		if (itr == m_actions.end())
+			return;
 
 		m_actions.erase(itr);
 	}
 
-	const ACTIONS& Reasoner::get_actions() const
+	const ACTIONS &Reasoner::get_actions() const
 	{
 		return m_actions;
 	}
@@ -336,7 +343,6 @@ namespace GOB
 	{
 		m_active_action = action;
 	}
-
 
 	// UPDATE
 
@@ -354,7 +360,7 @@ namespace GOB
 
 			delta = m_daytime;
 
-			for (auto& goal : m_goals)
+			for (auto &goal : m_goals)
 				goal->regenerate_random_growths();
 		}
 
@@ -366,7 +372,8 @@ namespace GOB
 	{
 		ACTION candidate = m_decision_func();
 
-		if (!candidate) return;
+		if (!candidate)
+			return;
 
 		if (m_active_action == nullptr)
 		{
@@ -389,7 +396,8 @@ namespace GOB
 
 	void Reasoner::execute()
 	{
-		if (!m_active_action) return;
+		if (!m_active_action)
+			return;
 
 		ExecuteSignal signal = m_active_action->execute();
 
@@ -399,26 +407,30 @@ namespace GOB
 			return;
 
 		case GOB::ExecuteSignal::DONE:
-			if (!m_active_action) return;
+			if (!m_active_action)
+				return;
 			m_redeem_func(m_active_action);
 			m_active_action->reset_instructions();
 			m_active_action = nullptr;
 			return;
 
 		case GOB::ExecuteSignal::INTERRUPT:
-			if (!m_active_action) return;
+			if (!m_active_action)
+				return;
 			if (interrupt())
 				m_redeem_func(m_active_action);
 			m_active_action = nullptr;
 			return;
 
 		case GOB::ExecuteSignal::ABORT:
-			if (!m_active_action) return;
+			if (!m_active_action)
+				return;
 			abort_active_action();
 			return;
 
 		case GOB::ExecuteSignal::ABORT_AND_COOLDOWN:
-			if (!m_active_action) return;
+			if (!m_active_action)
+				return;
 			abort_and_cooldown_active_action();
 			return;
 
@@ -444,7 +456,7 @@ namespace GOB
 
 	void Reasoner::update_goals(const float delta, float current_daytime)
 	{
-		for (auto& goal : m_goals)
+		for (auto &goal : m_goals)
 		{
 			goal->update(delta, current_daytime);
 			goal->cleanup_temporary_growths();
@@ -453,23 +465,25 @@ namespace GOB
 
 	void Reasoner::update_actions(float delta)
 	{
-		for (auto& action : m_actions)
+		for (auto &action : m_actions)
 			action->decrease_cooldown(delta);
 	}
 
-
-	ACTION Reasoner::most_pressing() {
+	ACTION Reasoner::most_pressing()
+	{
 		GOAL top_goal = std::make_shared<Goal>();
-		for (auto& goal : m_goals)
+		for (auto &goal : m_goals)
 			if (goal->exceeds_threshold() && goal->get_value() > top_goal->get_value())
 				top_goal = goal;
 
 		ACTION best_action;
 		float best_score = 0;
-		for (auto& action : m_actions) {
-			// find smallest score 
+		for (auto &action : m_actions)
+		{
+			// find smallest score
 			float score = action->get_change(top_goal);
-			if (score < best_score) {
+			if (score < best_score)
+			{
 				best_action = action;
 				best_score = score;
 			}
@@ -479,13 +493,16 @@ namespace GOB
 		return best_action;
 	}
 
-	ACTION Reasoner::best_dissatisfaction() {
+	ACTION Reasoner::best_dissatisfaction()
+	{
 		ACTION best_action = nullptr;
 		float best_score = std::numeric_limits<float>::infinity();
-		for (const auto& action : m_actions) {
+		for (const auto &action : m_actions)
+		{
 			// total discontentment (score) for current action
 			float score = 0;
-			for (const auto& goal : m_goals) {
+			for (const auto &goal : m_goals)
+			{
 				// calculate the new value after the action
 				float new_value = goal->get_value() + action->get_change(goal);
 				bool exceed_threshold = new_value > goal->get_threshold();
@@ -493,7 +510,8 @@ namespace GOB
 				score += exceed_threshold * goal->get_discontentment(new_value);
 			}
 			action->set_score(score);
-			if (score < best_score) {
+			if (score < best_score)
+			{
 				best_action = action;
 				best_score = score;
 			}
@@ -501,19 +519,22 @@ namespace GOB
 		return best_action;
 	}
 
-	ACTION Reasoner::best_dissatisfaction_time() {
+	ACTION Reasoner::best_dissatisfaction_time()
+	{
 		ACTION best_action = nullptr;
 		float best_score = std::numeric_limits<float>::infinity();
 
-		for (const auto& action : m_actions) {
+		for (const auto &action : m_actions)
+		{
 			// total discontentment (score) for current action
 			float score = 0;
-			for (const auto& goal : m_goals) {
+			for (const auto &goal : m_goals)
+			{
 				// calculate the new value after the action
 				float new_value = goal->get_value() + action->get_change(goal);
 
 				// calculate the change due to time alone
-				// this is a bit different from millington, 
+				// this is a bit different from millington,
 				// since the exact growth is taken into account
 				// not average growth per tick
 				new_value += goal->get_change(action->get_duration(), m_daytime, m_day_duration);
@@ -524,7 +545,8 @@ namespace GOB
 				score += exceed_threshold * goal->get_discontentment(new_value);
 			}
 			action->set_score(score);
-			if (score < best_score) {
+			if (score < best_score)
+			{
 				best_action = action;
 				best_score = score;
 			}
@@ -536,7 +558,7 @@ namespace GOB
 	{
 		GOAL top_goal = std::make_shared<Goal>();
 
-		for (const auto& goal : m_goals)
+		for (const auto &goal : m_goals)
 		{
 			float val = goal->exceeds_threshold() * goal->get_rank() * goal->get_value();
 			float top_val = top_goal->get_value() * top_goal->get_rank();
@@ -548,7 +570,7 @@ namespace GOB
 		ACTION best_action;
 		float best_score = 0;
 
-		for (const auto& action : m_actions)
+		for (const auto &action : m_actions)
 		{
 			float score = action->get_change(top_goal);
 
@@ -569,18 +591,18 @@ namespace GOB
 		ACTION best_action = nullptr;
 		float best_score = std::numeric_limits<float>::infinity();
 
-		for (const auto& action : m_actions)
+		for (const auto &action : m_actions)
 		{
 			// total discontentment (score) for current action
 			float score = 0;
-			for (const auto& goal : m_goals)
+			for (const auto &goal : m_goals)
 			{
 				// calculate the new value after the action
 				float new_value = goal->get_value() + action->get_change(goal);
 
 				bool valid_threshold = new_value > goal->get_threshold();
 
-				// get discontentment of the new value (hierarchically) 
+				// get discontentment of the new value (hierarchically)
 				score += valid_threshold * goal->get_hierarchical_discontentment(new_value);
 			}
 
@@ -601,17 +623,17 @@ namespace GOB
 		ACTION best_action = nullptr;
 		float best_score = std::numeric_limits<float>::infinity();
 
-		for (const auto& action : m_actions)
+		for (const auto &action : m_actions)
 		{
 			// total discontentment (score) for current action
 			float score = 0;
-			for (const auto& goal : m_goals)
+			for (const auto &goal : m_goals)
 			{
 				// calculate the new value after the action
 				float new_value = goal->get_value() + action->get_change(goal);
 
 				// calculate the change due to time alone
-				// this is a bit different from millington, 
+				// this is a bit different from millington,
 				// since the exact growth is taken into account
 				// not average growth per tick
 				new_value += goal->get_change(action->get_duration(), m_daytime, m_day_duration);
@@ -634,9 +656,10 @@ namespace GOB
 		return best_action;
 	}
 
-	ACTION Reasoner::hierarchical_most_pressing_best_dissatisfaction_time() {
+	ACTION Reasoner::hierarchical_most_pressing_best_dissatisfaction_time()
+	{
 		GOAL top_goal = std::make_shared<Goal>();
-		for (const auto& goal : m_goals)
+		for (const auto &goal : m_goals)
 		{
 			// hierarchicallly weighted value
 			float val = goal->get_value() * goal->get_rank() * goal->exceeds_threshold();
@@ -647,29 +670,30 @@ namespace GOB
 		}
 
 		GOALS top_goals;
-		for (const auto& goal : m_goals)
+		for (const auto &goal : m_goals)
 			if (goal->exceeds_threshold() && goal->get_rank() >= top_goal->get_rank())
 				top_goals.push_back(goal);
 
-
 		ACTIONS best_actions;
-		for (const auto& action : m_actions)
-			for (const auto& goal : top_goals)
+		for (const auto &action : m_actions)
+			for (const auto &goal : top_goals)
 				if (action->get_change(goal) < 0.0f)
 				{
 					best_actions.push_back(action);
 					break;
 				}
 
-		for (auto& action : m_actions)
+		for (auto &action : m_actions)
 			action->set_score(10'000.0f);
 
 		ACTION best_action = nullptr;
 		float best_score = std::numeric_limits<float>::infinity();
-		for (const auto& action : best_actions) {
+		for (const auto &action : best_actions)
+		{
 			// total discontentment (score) for current action
 			float score = 0;
-			for (const auto& goal : m_goals) {
+			for (const auto &goal : m_goals)
+			{
 				// calculate the new value after the action
 				float new_value = goal->get_value() + action->get_change(goal);
 
@@ -680,7 +704,8 @@ namespace GOB
 
 			score += std::log(action->get_duration() / 60);
 
-			if (score < best_score) {
+			if (score < best_score)
+			{
 				best_action = action;
 				best_score = score;
 			}
@@ -693,14 +718,16 @@ namespace GOB
 	/* EVALUATE */
 	bool Reasoner::minimal_score(ACTION current, ACTION candidate)
 	{
-		if (current == candidate) return false;
+		if (current == candidate)
+			return false;
 
 		return (candidate->get_score() < current->get_score());
 	}
 
 	bool Reasoner::minimal_score_time(ACTION current, ACTION candidate)
 	{
-		if (current == candidate) return false;
+		if (current == candidate)
+			return false;
 
 		float score_diff = current->get_score() / candidate->get_score();
 		float time_diff = candidate->get_duration() / current->get_duration();
@@ -721,9 +748,9 @@ namespace GOB
 	/* REDEEM */
 	void Reasoner::redeem_instant(ACTION action)
 	{
-		for (const auto& pair : action->get_affected_goals())
+		for (const auto &pair : action->get_affected_goals())
 		{
-			auto& change = pair.second;
+			auto &change = pair.second;
 			auto goal = get_goal(pair.first);
 			if (goal != nullptr)
 				goal->change_value(change.change);
@@ -736,14 +763,14 @@ namespace GOB
 
 	void Reasoner::redeem_delayed(ACTION action)
 	{
-		for (const auto& pair : action->get_affected_goals())
+		for (const auto &pair : action->get_affected_goals())
 		{
 			auto goal = get_goal(pair.first);
 			if (goal != nullptr)
 			{
-				auto& change = pair.second;
+				auto &change = pair.second;
 				if (change.duration > 0.0f)
-					goal->add_growth({ change.change, change.duration });
+					goal->add_growth({change.change, change.duration});
 				else
 					goal->change_value(change.change);
 			}
@@ -766,7 +793,7 @@ namespace GOB
 	}
 
 #ifdef GOB_ENABLE_LOGGING
-	void Reasoner::log(const std::string& path)
+	void Reasoner::log(const std::string &path)
 	{
 		std::string filename = path;
 		filename += "reasoner_" + std::to_string(m_id) + "_strategy_";
@@ -803,4 +830,3 @@ namespace GOB
 	}
 #endif // GOB_ENABLE_LOGGING
 }
-

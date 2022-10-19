@@ -12,9 +12,10 @@ REGISTER_COMPONENT(NPC)
 using namespace Unigine;
 using namespace Math;
 
-void NPC::set_text(const std::string& activity)
+void NPC::set_text(const std::string &activity)
 {
-	if (!m_text) return;
+	if (!m_text)
+		return;
 	std::string strategy;
 	switch (m_reasoner.get_decision_strategy())
 	{
@@ -46,39 +47,39 @@ void NPC::set_text(const std::string& activity)
 	}
 
 	strategy += '\n';
-	auto str = std::string{ strategy + activity };
+	auto str = std::string{strategy + activity};
 	m_text->setText(str.c_str());
 }
 
 void NPC::init()
 {
 	// read config file
-	std::fstream file{ "../gob/config.txt", std::ios::in };
+	std::fstream file{"../gob/config.txt", std::ios::in};
 	if (file.is_open())
 	{
 		std::string tmp;
 		std::getline(file, tmp);
 
-		std::stringstream ss{ tmp };
+		std::stringstream ss{tmp};
 		tmp.clear();
 
 		m_active_geometry = false;
 
 		while (ss >> tmp)
 		{
-			if (tmp == std::string{ "mp" } && int(m_decision_strat) == 0)
+			if (tmp == std::string{"mp"} && int(m_decision_strat) == 0)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "bd" } && int(m_decision_strat) == 1)
+			else if (tmp == std::string{"bd"} && int(m_decision_strat) == 1)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "bdt" } && int(m_decision_strat) == 2)
+			else if (tmp == std::string{"bdt"} && int(m_decision_strat) == 2)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "hmp" } && int(m_decision_strat) == 3)
+			else if (tmp == std::string{"hmp"} && int(m_decision_strat) == 3)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "hbd" } && int(m_decision_strat) == 4)
+			else if (tmp == std::string{"hbd"} && int(m_decision_strat) == 4)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "hbdt" } && int(m_decision_strat) == 5)
+			else if (tmp == std::string{"hbdt"} && int(m_decision_strat) == 5)
 				m_active_geometry = true;
-			else if (tmp == std::string{ "hmpbdt" } && int(m_decision_strat) == 6)
+			else if (tmp == std::string{"hmpbdt"} && int(m_decision_strat) == 6)
 				m_active_geometry = true;
 		}
 
@@ -88,17 +89,17 @@ void NPC::init()
 		// make geometry invisible
 		if (!m_active_geometry)
 		{
-			auto& head = getNode()->getChild(0)->getChild(0)->getChild(0);
+			auto &head = getNode()->getChild(0)->getChild(0)->getChild(0);
 			head->setEnabled(0);
 
-			auto& body = getNode()->getChild(0)->getChild(1)->getChild(0);
+			auto &body = getNode()->getChild(0)->getChild(1)->getChild(0);
 			body->setEnabled(0);
 		}
 	}
 
-	// INIT 
+	// INIT
 
-	NodePtr* n = &node;
+	NodePtr *n = &node;
 
 	m_reasoner.set_npc(n);
 	m_reasoner.set_day_duration(m_day_duration * 60);
@@ -110,7 +111,7 @@ void NPC::init()
 	GOB::Attributes attributes;
 	for (int i = 0; i < m_attributes.size(); ++i)
 	{
-		auto attribute = std::string{ m_attributes[i] };
+		auto attribute = std::string{m_attributes[i]};
 		attributes.add(attribute);
 	}
 
@@ -119,14 +120,14 @@ void NPC::init()
 	// goals
 	for (int i = 0; i < m_goals.size(); ++i)
 	{
-		auto& prop_goal = m_goals[i];
+		auto &prop_goal = m_goals[i];
 
-		auto name = std::string{ prop_goal->name };
+		auto name = std::string{prop_goal->name};
 		auto value = float(prop_goal->value);
 		auto threshold = float(prop_goal->threshold);
 		auto rank = uint8_t(prop_goal->rank);
 
-		auto goal = GOB::Goal{ name };
+		auto goal = GOB::Goal{name};
 
 		goal.set_value(value);
 		goal.set_threshold(threshold);
@@ -134,7 +135,7 @@ void NPC::init()
 
 		// growths
 
-		auto& prop_perm_growths = prop_goal->m_permanent_growths;
+		auto &prop_perm_growths = prop_goal->m_permanent_growths;
 
 		for (int i = 0; i < prop_perm_growths.size(); ++i)
 		{
@@ -142,10 +143,10 @@ void NPC::init()
 			float start = prop_perm_growths[i]->start * 60;
 			float end = prop_perm_growths[i]->end * 60;
 
-			goal.add_growth({ change, start, end });
+			goal.add_growth({change, start, end});
 		}
 
-		auto& prop_rand_growths = prop_goal->m_random_growths;
+		auto &prop_rand_growths = prop_goal->m_random_growths;
 
 		for (int i = 0; i < prop_rand_growths.size(); ++i)
 		{
@@ -155,17 +156,17 @@ void NPC::init()
 			float change_start = prop_rand_growths[i]->change_start;
 			float change_end = prop_rand_growths[i]->change_end;
 
-			goal.add_growth({ change_start, change_end, start, end });
+			goal.add_growth({change_start, change_end, start, end});
 		}
 
-		auto& prop_temp_growths = prop_goal->m_temporary_growths;
+		auto &prop_temp_growths = prop_goal->m_temporary_growths;
 
 		for (int i = 0; i < prop_temp_growths.size(); ++i)
 		{
 			float change = prop_temp_growths[i]->change;
 			float duration = prop_temp_growths[i]->duration;
 
-			goal.add_growth({ change, duration });
+			goal.add_growth({change, duration});
 		}
 
 		m_reasoner.add_goal(goal);
@@ -196,7 +197,8 @@ void NPC::update()
 #ifdef GOB_ENABLE_LOGGING
 	m_reasoner.log(Game::getIFps());
 #endif // GOB_ENABLE_LOGGING
-	if (!m_active_geometry) return;
+	if (!m_active_geometry)
+		return;
 
 	if (m_reasoner.get_current_action() == nullptr)
 		set_text(" konnte keine Aktion finden");
@@ -210,7 +212,7 @@ void NPC::update()
 	std::string sminutes = (minutes < 10) ? "0" + std::to_string(minutes) : std::to_string(minutes);
 
 	std::string prev_text = m_text->getText();
-	auto text = std::string{ shours + ":" + sminutes };
+	auto text = std::string{shours + ":" + sminutes};
 	prev_text = prev_text + '\n' + text;
 
 	m_text->setText(prev_text.c_str());
@@ -220,8 +222,8 @@ void NPC::update()
 
 void NPC::shutdown()
 {
-	auto path = std::string{ "../gob/logging/" };
-	if(m_reasoner.get_id() < 10)
+	auto path = std::string{"../gob/logging/"};
+	if (m_reasoner.get_id() < 10)
 		m_reasoner.log(path);
 	GOB::Broadcaster::get_instance().remove_reasoner(&m_reasoner);
 }

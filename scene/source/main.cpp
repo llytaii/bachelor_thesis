@@ -11,7 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #include <UnigineEngine.h>
 
 #include "AppEditorLogic.h"

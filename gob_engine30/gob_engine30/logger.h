@@ -20,13 +20,13 @@ namespace GOB
 	{
 	public:
 		// log data to memory
-		void log(float timestamp, GOALS& goals, ACTIONS& actions, ACTION& current);
+		void log(float timestamp, GOALS &goals, ACTIONS &actions, ACTION &current);
 
 		// log data to memory
-		void log(float timestamp, GOALS& goals, ACTIONS& actions, ACTION& current, const std::string& source);
+		void log(float timestamp, GOALS &goals, ACTIONS &actions, ACTION &current, const std::string &source);
 
 		// save data to file
-		void save_to_file(const std::string& filename);
+		void save_to_file(const std::string &filename);
 
 		// calculate action progress
 		void calculate_action_progress();
@@ -54,4 +54,3 @@ namespace GOB
 		std::vector<std::string> m_active_actions;
 	};
 }
-

@@ -14,7 +14,7 @@ namespace GOB
 		Goal() = default;
 		~Goal() = default;
 
-		Goal(const std::string& name);
+		Goal(const std::string &name);
 
 		// getter
 		float get_value() const;
@@ -30,13 +30,13 @@ namespace GOB
 		// FUTURE CHANGE
 		// calculates by how much the goal would change after the given delta_current
 		// e.g.: delta_current: 10s, current_time 0s, day_duration: 20s
-		// -> get by how much the value would have changed 10s into the future (whole day is 20s) 
+		// -> get by how much the value would have changed 10s into the future (whole day is 20s)
 		// (supports 1 day wrapping, e.g.:
 		//  delta_current: 15s, current_time: 0s, day_duration: 10s -> OK, 5s into new day
 		//  delta_current: 25s, current_time: 0s, day_duration: 10s -> NOT OK, 5s into second day!)
-		float get_change(float delta_current, float daytime , float day_duration) const;
+		float get_change(float delta_current, float daytime, float day_duration) const;
 
-		// SETTER 
+		// SETTER
 
 		// clamps [0,1]
 		void set_value(float val);
@@ -44,15 +44,15 @@ namespace GOB
 		void set_threshold(float val);
 		void set_rank(uint8_t val);
 
-		// ETC 
+		// ETC
 		bool exceeds_threshold() const;
 
 		// adds val to value, clamps [0,1]
 		void change_value(float val);
 
-		void add_growth(const PermanentGrowth& growth);
-		void add_growth(const RandomGrowth& growth);
-		void add_growth(const TemporaryGrowth& growth);
+		void add_growth(const PermanentGrowth &growth);
+		void add_growth(const RandomGrowth &growth);
+		void add_growth(const TemporaryGrowth &growth);
 
 		// update value based on growths
 		void update(float delta, float current_time);
@@ -79,4 +79,3 @@ namespace GOB
 		float clamp(float val); // [0, 1]
 	};
 }
-

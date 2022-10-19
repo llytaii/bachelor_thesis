@@ -17,7 +17,6 @@ namespace GOB
 {
 	// brain of the npc
 
-
 	// types of predefined strategies for...
 	enum class DECISION // decide on the best action (candidate action)
 	{
@@ -38,8 +37,8 @@ namespace GOB
 
 	enum class EVALUATE // evaluate whether the candidate should replace the current action or not
 	{
-		MINIMAL_SCORE, // action with lower score wins
-		MINIMAL_SCORE_TIME, // lower score vs remaining duration 
+		MINIMAL_SCORE,		// action with lower score wins
+		MINIMAL_SCORE_TIME, // lower score vs remaining duration
 		UNKNOWN
 	};
 
@@ -59,20 +58,20 @@ namespace GOB
 		Reasoner();
 		~Reasoner() = default;
 
-		Reasoner(const Reasoner& other);
-		Reasoner(Reasoner&& other) noexcept;
+		Reasoner(const Reasoner &other);
+		Reasoner(Reasoner &&other) noexcept;
 
-		Reasoner& operator=(const Reasoner& other);
-		Reasoner& operator=(Reasoner&& other) noexcept;
+		Reasoner &operator=(const Reasoner &other);
+		Reasoner &operator=(Reasoner &&other) noexcept;
 
-		// GETTER 
+		// GETTER
 
 		// logging
 #ifdef GOB_ENABLE_LOGGING
 		size_t get_id() const;
 #endif // GOB_ENABLE_LOGGING
 
-		void* get_npc() const;
+		void *get_npc() const;
 
 		float get_current_time() const;
 		float get_day_duration() const;
@@ -83,11 +82,11 @@ namespace GOB
 
 		ACTION get_current_action() const;
 
-		// INIT 
+		// INIT
 		void set_day_duration(float duration);
 		void set_current_time(float time);
 
-		void set_npc(void* npc);
+		void set_npc(void *npc);
 
 		void set_decision_strategy(DECISION strategy);
 		void set_evaluate_strategy(EVALUATE strategy);
@@ -97,26 +96,26 @@ namespace GOB
 
 		// copies the given goal and returns a handle
 		// !nullptr if name is not unique!
-		GOAL add_goal(const Goal& goal);
+		GOAL add_goal(const Goal &goal);
 
 		// get a handle to a goal with the given name
 		// !nullptr if name not found!
-		GOAL get_goal(const std::string& name);
+		GOAL get_goal(const std::string &name);
 
 		// remove goal by name
-		void remove_goal(const std::string& name);
+		void remove_goal(const std::string &name);
 
-		const GOALS& get_goals() const;
+		const GOALS &get_goals() const;
 
 		// actions
 		// copies the given action and returns a handle
 		// !returns nullptr if id is not unique!
-		ACTION add_action(const Action& action);
+		ACTION add_action(const Action &action);
 
 		// delete action by id
 		void remove_action(size_t id);
 
-		const ACTIONS& get_actions() const;
+		const ACTIONS &get_actions() const;
 
 		// testing
 		void set_current_action(ACTION action);
@@ -136,7 +135,6 @@ namespace GOB
 		void log(float delta);
 #endif // GOB_ENABLE_LOGGING
 
-
 		void update_goals(float delta, float current_daytime);
 		void update_actions(float delta);
 
@@ -153,7 +151,7 @@ namespace GOB
 		ACTION hierarchical_most_pressing_best_dissatisfaction_time();
 
 		/* EVALUATE */
-		// returns true if current should be interrupted 
+		// returns true if current should be interrupted
 		bool minimal_score(ACTION current, ACTION candidate);
 		bool minimal_score_time(ACTION current, ACTION candidate);
 
@@ -171,7 +169,7 @@ namespace GOB
 		void abort_and_cooldown_active_action();
 
 #ifdef GOB_ENABLE_LOGGING
-		void log(const std::string& path);
+		void log(const std::string &path);
 #endif // GOB_ENABLE_LOGGING
 
 	private:
@@ -187,9 +185,9 @@ namespace GOB
 
 		// information
 		float m_daytime = 0.0f;
-		float m_day_duration = 60 * 24; // 1 min = 1 h 
+		float m_day_duration = 60 * 24; // 1 min = 1 h
 
-		void* m_npc = nullptr;
+		void *m_npc = nullptr;
 
 		GOALS m_goals;
 		ACTIONS m_actions;
@@ -202,7 +200,7 @@ namespace GOB
 			&Reasoner::best_dissatisfaction, this);
 
 		EVALUATE m_evaluate_strat = EVALUATE::MINIMAL_SCORE;
-		std::function<bool(ACTION, ACTION)>m_evaluate_func = std::bind(
+		std::function<bool(ACTION, ACTION)> m_evaluate_func = std::bind(
 			&Reasoner::minimal_score, this, std::placeholders::_1, std::placeholders::_2);
 
 		REDEEM m_redeem_strat = REDEEM::INSTANT;
@@ -210,4 +208,3 @@ namespace GOB
 			&Reasoner::redeem_instant, this, std::placeholders::_1);
 	};
 }
-

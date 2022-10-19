@@ -11,7 +11,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #include "AppWorldLogic.h"
 #include <UnigineEditor.h>
 #include <UnigineGame.h>
@@ -25,15 +24,17 @@ using namespace Math;
 // These methods are called right after corresponding world script's (UnigineScript) methods.
 
 AppWorldLogic::AppWorldLogic()
-{}
+{
+}
 
 AppWorldLogic::~AppWorldLogic()
-{}
+{
+}
 
 int AppWorldLogic::init()
 {
 	// enable the engine visualizer
-	//Visualizer::setEnabled(1);
+	// Visualizer::setEnabled(1);
 
 	return 1;
 }
@@ -71,17 +72,16 @@ int AppWorldLogic::shutdown()
 	return 1;
 }
 
-int AppWorldLogic::save(const Unigine::StreamPtr& stream)
+int AppWorldLogic::save(const Unigine::StreamPtr &stream)
 {
 	// Write here code to be called when the world is saving its state (i.e. state_save is called): save custom user data to a file.
 	UNIGINE_UNUSED(stream);
 	return 1;
 }
 
-int AppWorldLogic::restore(const Unigine::StreamPtr& stream)
+int AppWorldLogic::restore(const Unigine::StreamPtr &stream)
 {
 	// Write here code to be called when the world is restoring its state (i.e. state_restore is called): restore custom user data to a file here.
 	UNIGINE_UNUSED(stream);
 	return 1;
 }
-

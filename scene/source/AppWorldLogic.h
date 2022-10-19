@@ -12,7 +12,6 @@
  * UNIGINE. at http://unigine.com/
  */
 
-
 #ifndef __APP_WORLD_LOGIC_H__
 #define __APP_WORLD_LOGIC_H__
 
@@ -38,11 +37,10 @@ public:
 
 	int shutdown() override;
 
-	int save(const Unigine::StreamPtr& stream) override;
-	int restore(const Unigine::StreamPtr& stream) override;
+	int save(const Unigine::StreamPtr &stream) override;
+	int restore(const Unigine::StreamPtr &stream) override;
 
 private:
 };
 
 #endif // __APP_WORLD_LOGIC_H__
-
