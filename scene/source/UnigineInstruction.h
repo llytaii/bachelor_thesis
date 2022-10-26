@@ -17,16 +17,18 @@ public:
 	virtual ~UnigineInstruction() = default;
 
 	UnigineInstruction(uint8_t _sequence_order)
-		: Instruction{ _sequence_order }
-	{}
-
-	UnigineInstruction(const UnigineInstruction& other) = default;
-	UnigineInstruction(UnigineInstruction && other) = default;
-
-	virtual void set_npc_reasoner(void* npc, GOB::Reasoner* reasoner) override
+		: Instruction{_sequence_order}
 	{
-		if (!npc) return;
-		m_node = *static_cast<NodePtr*>(npc);
+	}
+
+	UnigineInstruction(const UnigineInstruction &other) = default;
+	UnigineInstruction(UnigineInstruction &&other) = default;
+
+	virtual void set_npc_reasoner(void *npc, GOB::Reasoner *reasoner) override
+	{
+		if (!npc)
+			return;
+		m_node = *static_cast<NodePtr *>(npc);
 		m_component = ComponentSystem::get()->getComponent<NPC>(m_node);
 
 		m_npc = npc;
@@ -41,6 +43,5 @@ public:
 
 protected:
 	Unigine::NodePtr m_node;
-	NPC* m_component = nullptr;
+	NPC *m_component = nullptr;
 };
-
