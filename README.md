@@ -1,6 +1,6 @@
 KI-Modul und Testszene meiner Bachelorarbeit
 ***
-![](https://github.com/llytaii/bachelor_thesis/blob/master/scene/scene.jpg?raw=true)
+![](https://github.com/llytaii/bachelor_thesis/blob/main/scene/scene.jpg?raw=true)
 
 Ausführung (via cmd): 
 ```
